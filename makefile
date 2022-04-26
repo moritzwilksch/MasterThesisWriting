@@ -2,6 +2,8 @@ BUILD_DIR := out
 
 .SILENT: final quick
 
+# TODO: format with latexindent.pl -w ...
+
 clean:
 	rm $(BUILD_DIR)/*.aux $(BUILD_DIR)/*.bak* $(BUILD_DIR)/*.bbl $(BUILD_DIR)/*.blg $(BUILD_DIR)/*.log $(BUILD_DIR)/*.out $(BUILD_DIR)/*.toc
 
