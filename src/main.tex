@@ -20,6 +20,9 @@
 \usepackage{tabularx}
 \usepackage{hyperref}  % Links in TOC and \refs
 \usepackage{apacite}
+\usepackage{xcolor} % Must import BEFORE tcolorbox
+\usepackage{tcolorbox}
+
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -31,6 +34,8 @@
 % MISC COMMANDS
 \hypersetup{linktocpage, pdfborder = {0 0 0}} % Links
 \hypersetup{bookmarks=true, bookmarksnumbered=true} % Links in TOC
+\definecolor{up-blue}{HTML}{00305e}
+
 
 
 % =============================================================================
@@ -44,7 +49,8 @@
 \input{chapters/01_Introduction.tex}
 \newpage
 \input{chapters/02_TheoreticalBackground.tex}
-
+\newpage
+\input{chapters/03_Methodology.tex}
 
 
 

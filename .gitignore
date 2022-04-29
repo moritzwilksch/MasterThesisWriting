@@ -2,3 +2,4 @@ out/*
 src/.texpadtmp
 *.log
 *.pdf
+.DS_Store
