@@ -23,7 +23,8 @@
 \usepackage{xcolor} % Must import BEFORE tcolorbox
 \usepackage{tcolorbox}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows, shadows, positioning, trees}
+\usetikzlibrary{shapes.geometric, arrows, positioning, trees, fit}  % DO NOT use "shadows". It breaks the TOC in half
+
 
 
 
@@ -56,7 +57,7 @@
 \newpage
 \input{chapters/03_Methodology.tex}
 
-%\input{assets/tikz_figures/example01.tex}
+\input{assets/tikz_figures/example01.tex}
 \input{assets/tikz_figures/example02.tex}
 %\input{assets/tikz_figures/example03.tex}
 

@@ -1,14 +1,20 @@
 \begin{figure}[!ht]
 	\centering
-	\begin{tikzpicture}
-		\node[rectangle,draw,line width=1pt,minimum width=3cm](r1) at (0,0){text content};
-		\node[rectangle,draw,line width=1pt,minimum width=3cm](r2) at (0,-1){text content};
-		
-		\node[rectangle,draw,line width=1pt,minimum width=3cm](r3) at (6,-1){text content};
-		
-		\coordinate[left = 2cm of r3] (coord);
-		\draw[line width=1pt,-] (r1.east) -| (coord);
-		\draw[line width=1pt,-] (r2.east) -| (coord);
-		\draw[line width=1pt,->] (coord) -- (r3.west);
-	\end{tikzpicture}
+\begin{tikzpicture}%
+\node[black,minimum height=0.65cm] (h1) at (0.0,0.8) {\textbf{Words}};%
+\node[black,minimum height=0.65cm] (h2) at (4.0,0.8) {\textbf{Word Embeddings}};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of h1] (0) {hello};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of h2] (vec_0) {-1.08,  -0.26,  0.11,  0.98,  0.63};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of 0] (1) {this};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of vec_0] (vec_1) {0.90,  -2.96,  0.79,  0.83,  -0.97};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of 1] (2) {is};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of vec_1] (vec_2) {0.68,  0.57,  2.48,  -0.26,  1.69};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of 2] (3) {a};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of vec_2] (vec_3) {0.42,  -2.45,  0.46,  1.93,  -0.99};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of 3] (4) {good};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of vec_3] (vec_4) {1.29,  -0.98,  0.13,  1.39,  -1.65};%
+\node[draw,rectangle,minimum width=1.5cm,black,opacity=0.5,align=center,minimum height=0.65cm,below=0.2cm of 4] (5) {test};%
+\node[draw,rectangle,minimum width=6cm,black,align=center,minimum height=0.65cm,below=0.2cm of vec_4] (vec_5) {-0.44,  -0.64,  -0.45,  0.05,  -1.15};%
+\node[draw,red,fit=(vec_1) (vec_2),inner sep=0.1cm,line width=1pt] {};%
+\end{tikzpicture}%
 \end{figure}
