@@ -1,0 +1,14 @@
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\node[rectangle,draw,line width=1pt,minimum width=3cm](r1) at (0,0){text content};
+		\node[rectangle,draw,line width=1pt,minimum width=3cm](r2) at (0,-1){text content};
+		
+		\node[rectangle,draw,line width=1pt,minimum width=3cm](r3) at (6,-1){text content};
+		
+		\coordinate[left = 2cm of r3] (coord);
+		\draw[line width=1pt,-] (r1.east) -| (coord);
+		\draw[line width=1pt,-] (r2.east) -| (coord);
+		\draw[line width=1pt,->] (coord) -- (r3.west);
+	\end{tikzpicture}
+\end{figure}

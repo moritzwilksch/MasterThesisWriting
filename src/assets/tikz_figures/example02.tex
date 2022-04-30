@@ -1,0 +1,33 @@
+\definecolor{lightgrey}{HTML}{DDDDDD}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+		\definecolor{grey}{HTML}{999999}
+		\tikzstyle{mystyle}=[draw,grey,opacity=0,anchor=east]
+		\tikzstyle{level1style}=[draw,minimum height=18pt]
+		
+		\node[mystyle](l1) at (-3.5, 0.5) {Word};
+		\node[mystyle](l1) at (-3.5, -1) {Tokens};
+		
+		\draw
+			node[rectangle,draw,line width=1pt,fill=lightgrey](word) at (-0.5,0.5) {university}
+			node[level1style](n1) at (-2, -1) {uni}
+			node[level1style](n2) at (-1, -1) {niv}		
+			node[level1style](n3) at (0, -1) {...}
+			node	[level1style](n4) at (1, -1) {ity};
+		
+		\coordinate[above=0.25cm of n1](c1);
+		\coordinate[above=0.25cm of n2](c2);
+		\coordinate[above=0.25cm of n3](c3);
+		\coordinate[above=0.25cm of n4](c4);
+		
+		\draw 
+			(n1.north) -- (c1) -| (word.south)
+			(n2.north) -- (c2) -| (word.south)
+			(n3.north) -- (c3) -| (word.south)
+			(n4.north) -- (c4) -| (word.south);
+		
+	\end{tikzpicture}
+	\caption{An example tikz figure showing a diagram}
+\end{figure}

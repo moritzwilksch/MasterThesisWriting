@@ -13,7 +13,7 @@
 \usepackage{parskip}  % no paragraph indent + space between paragraphs
 \renewcommand{\baselinestretch}{1.2}  % line spacing
 \setcounter{secnumdepth}{4}  % max. heading depth
-
+\usepackage[titletoc]{appendix}
 
 % MISC Packages
 \usepackage{booktabs}  % table rules
@@ -22,6 +22,10 @@
 \usepackage{apacite}
 \usepackage{xcolor} % Must import BEFORE tcolorbox
 \usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, shadows, positioning, trees}
+
+
 
 
 % HEADER & FOOTER
@@ -52,6 +56,11 @@
 \newpage
 \input{chapters/03_Methodology.tex}
 
+%\input{assets/tikz_figures/example01.tex}
+\input{assets/tikz_figures/example02.tex}
+%\input{assets/tikz_figures/example03.tex}
+
+
 
 
 \newpage
@@ -59,5 +68,15 @@
 % -------------- START REFERENCES --------------
 \bibliography{bibliography/refs}{}
 \bibliographystyle{apacite}
+
+% -------------- START APPENDIX --------------
+\newpage % TODO: extract to file
+\begin{appendices}
+\section{Section Heading}
+Hello Test
+\end{appendices}
+
+
+
 
 \end{document}
