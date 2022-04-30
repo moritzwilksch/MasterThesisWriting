@@ -1,29 +1,38 @@
 \section{Theoretical Background}
 
+\subsection{Financial Posts on Social Media}
+\begin{itemize}[noitemsep]
+	\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
+	\item Data characteristica: Reddit posts vs. Twitter posts (compare avg. length of each?)
+\end{itemize}
+
+
 \subsection{Sentiment Analysis}  % TODO: wording
+\subsubsection{Operationalization of Sentiment}
+\begin{itemize}
+	\item Definition: ``Opinion'' would be a more accurate term (Munezero, 2014)
+	\item Scales: continuous $\in [-1, 1]$, discrete $\in \{pos, neg, neu\}$, 1-5 star reviews \dots
+\end{itemize}
 \subsubsection{Sentiment in the Financial Context}
-\subsubsection{Automated Sentiment Analysis}
 
+Finance-specific, alternative operationalization of sentiment:
+\begin{itemize}[noitemsep]
+	\item VIX
+	\item Fear \& greed index, more in Aggarwal (2018)
+	\item Social sentiment @IBKR?
+	
+\end{itemize}
 
-
-\subsection{Developments in Natural Language Processing}
-\subsubsection{Machine Learning Models}
-\subsubsection{Recurrent Neural Networks}
-\subsubsection{Transformer-Based Neural Networks}
+\subsection{Automated Sentiment Analysis}
+\subsubsection{Model Perspective}
+\subsubsection{Data Set Perspective}
+\subsubsection{Task Perspective}
 
 
 
 An example of a prompt to GPT-J \cite{gpt-j}
-	
-% Demo tcolorbox
-\begin{figure}[!ht]
-	\centering
-	\begin{tcolorbox}[colframe=up-blue,title=Prompt: ``Breaking news: the University of Potsdam'',width=0.9\textwidth]
-		Breaking news: the University of Potsdam has become the first university in the world to offer a Bachelor of Science in Computer Science. And it will be free for all students. This is a revolution for Germany, which currently has no higher education degree in computer science.
-	\end{tcolorbox}
-	\caption{GPT-J-6B response for an example prompt}
-	\label{example_prompt}
-\end{figure}
 
 
 
+
+\subsection{Conceptual Framework}
