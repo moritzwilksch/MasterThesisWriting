@@ -1,0 +1,59 @@
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+
+	% --- NODES ---
+	\node(m) at (-3, 0) {
+		\begin{myboxprimary}{Model}{width=4.5cm}
+		\begin{itemize}[noitemsep,leftmargin=*]
+			\item Dictionary
+			\item Machine Learning
+			\item Deep Learning
+		\end{itemize}	
+		\end{myboxprimary}
+	};
+	
+	\node(d) at (5, 0) {
+		\begin{myboxprimary}{Dataset}{width=5cm}
+		\begin{itemize}[noitemsep,leftmargin=*]
+			\item SemEval2017
+			\item FinancialPhrasebank
+			\item Reuters TRC2
+		\end{itemize}	
+		\end{myboxprimary}
+	};
+	
+	
+	\node(t) at (2.5, -3.75) {
+		\begin{myboxsecondary}{Task}{width=4.1cm}
+		\begin{itemize}[noitemsep,leftmargin=*]
+			\item 3-class polarity
+			\item Continuous scale
+			\item Ordinal scale
+		\end{itemize}	
+		\end{myboxsecondary}
+	};
+	
+	\node(domain) at (7.5, -3.75) {
+		\begin{myboxsecondary}{Domain}{width=4cm}
+		\begin{itemize}[noitemsep,leftmargin=*]
+			\item Twitter
+			\item StockTwits
+			\item News Headlines
+		\end{itemize}	
+		\end{myboxsecondary}
+	};
+	
+	
+	\node[draw,fit=(m)(d)(t)(domain),dashed,label=\textbf{Sentiment Analysis}]{};
+
+	% --- ARROWS ---	
+	\draw[->,line width=1pt,] (m) -- (d) node[midway,above]{based on};
+	\draw[<-,line width=1pt] (t.north) -- +(0,0.4) -| (d.240) node[midway,left,yshift=0.3cm]{defines};
+	
+	\draw[<-,line width=1pt] (domain.north) -- +(0,0.4) -| (d.300) node[midway,right,yshift=0.3cm]{sampled from};
+	
+	\draw[<-,line width=1pt] (t.west) -| (m.south) node[midway,right,yshift=0.3cm]{performs};
+	
+	\end{tikzpicture}
+\end{figure}
