@@ -11,9 +11,12 @@
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{parskip}  % no paragraph indent + space between paragraphs
-\renewcommand{\baselinestretch}{1.2}  % line spacing
+%\renewcommand{\baselinestretch}{1.2}  % line spacing
+\spacing{1.2}
 \setcounter{secnumdepth}{4}  % max. heading depth
 \usepackage[titletoc]{appendix}
+\usepackage{varwidth}
+\usepackage{makecell}
 
 % MISC Packages
 \usepackage{booktabs}  % table rules
@@ -23,12 +26,9 @@
 \usepackage{xcolor} % Must import BEFORE tcolorbox
 \usepackage{tcolorbox}
 \usepackage{enumitem}
+\usepackage{multirow}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, trees, fit, chains,matrix,calc}  % DO NOT use "shadows". It breaks the TOC in half
-
-
-
-
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -41,7 +41,7 @@
 \hypersetup{linktocpage, pdfborder = {0 0 0}} % Links
 \hypersetup{bookmarks=true, bookmarksnumbered=true} % Links in TOC
 \definecolor{up-blue}{HTML}{00305e}
-
+\renewcommand{\arraystretch}{0.9}  % line spacing WITHIN TABLES
 
 
 % =============================================================================

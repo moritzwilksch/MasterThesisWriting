@@ -1,18 +1,18 @@
 \section{Theoretical Background}
 
-\subsection{Financial Posts on Social Media}
-\begin{itemize}[noitemsep]
-	\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
-	\item Data characteristica: Reddit posts vs. Twitter posts (compare avg. length of each?)
-\end{itemize}
 
 
+% =======================================================================
 \subsection{Sentiment Analysis}  % TODO: wording
+
+% -----------------------------------------------------------------------
 \subsubsection{Operationalization of Sentiment}
 \begin{itemize}[noitemsep]
 	\item Definition: ``Opinion'' would be a more accurate term (Munezero, 2014)
 	\item Scales: continuous $\in [-1, 1]$, discrete $\in \{pos, neg, neu\}$, 1-5 star reviews \dots
 \end{itemize}
+
+% -----------------------------------------------------------------------
 \subsubsection{Sentiment in the Financial Context}
 
 Finance-specific, alternative operationalization of sentiment:
@@ -23,28 +23,83 @@ Finance-specific, alternative operationalization of sentiment:
 	
 \end{itemize}
 
-\subsection{Automated Sentiment}
+% =======================================================================
+\subsection{Automated Sentiment Analysis}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.8\textwidth]{assets/images/plot.pdf}
-	\caption{This is the caption, 1234567890}
-\end{figure}
 
+% -----------------------------------------------------------------------
 \subsubsection{Model Perspective}
+\begin{itemize}[noitemsep]
+	\item Dictionaries
+	\item ML
+	\item DL (RNN, Transformer models)
+\end{itemize}
+
+\emph{Argument:} We can only consider models that are available as artifacts. Theoretical papers cannot be considered, as we can't reproduce their models/apply them in our experiments
+
+
+
+
+% -----------------------------------------------------------------------
 \subsubsection{Data Set Perspective}
 Mention data-centric AI!
 \begin{itemize}[noitemsep]
 	\item describe different task types
-	\item describe different domains + challenges
+	\item describe different domains + challenges (financial posts on social media)
+	\begin{itemize}[noitemsep]
+		\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
+		\item Data characteristica: Reddit posts vs. Twitter posts (compare avg. length of each?)
+\end{itemize}
 \end{itemize}
 
 
 
 An example of a prompt to GPT-J \cite{gpt-j}
 
+% =======================================================================
+\subsection{Large Language Models}
+
+% =======================================================================
+\subsection{Research Gap?}
+\begin{itemize}[noitemsep]
+	\item performance benchmarks of LLMs (and all other models too, right?) on domain-specific texts
+	\item development of a data set 	
+\end{itemize}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{ccc}
+	\toprule
+	& \multicolumn{2}{c}{\textbf{Finance-Specific}} \\
+	\cmidrule(l){2-3}
+	\textbf{SNS-Specific} & Yes & No\\
+	\midrule
+	Yes & Sohangir (2018)$^*$ & \makecell{VADER, AFINN,\\ SentiStrength, Twitter roBERTa} \\[15pt]
+	No & \makecell{Loughran\&McDonald,\\ FinBERT} & \makecell{SentiWordNet, ANEW,\\ LIWC, Harvard-IV-4, Hu \& Liu}\\
+	\bottomrule
+	\multicolumn{3}{l}{\footnotesize{* model artifact has not been published}}
+\end{tabular}
+\end{table}
 
 
+
+
+
+% =======================================================================
 \subsection{Conceptual Framework}
 
 \input{assets/tikz_figures/conceptual_framework.tex}
+
+\emph{Research Questions}: Do LLMs perform well on domain-specific sentiment ananylsis tasks? How do they compare to smaller, machine-learning-based models as well as generic off-the-shelf models? Can simple, domain-specific models outperform LLMs/fine-tuned LLMs? Even if not, how do their memory/compute/cost footprints compare? 
+
+Models to build:
+
+\input{assets/tables/static/models_to_build.tex}
+
+
+
+
+
+
+
+
