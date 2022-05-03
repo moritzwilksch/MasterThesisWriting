@@ -20,7 +20,6 @@ Finance-specific, alternative operationalization of sentiment:
 	\item VIX
 	\item Fear \& greed index, more in Aggarwal (2018)
 	\item Social sentiment @IBKR?
-	
 \end{itemize}
 
 % =======================================================================
@@ -28,20 +27,7 @@ Finance-specific, alternative operationalization of sentiment:
 
 
 % -----------------------------------------------------------------------
-\subsubsection{Model Perspective}
-\begin{itemize}[noitemsep]
-	\item Dictionaries
-	\item ML
-	\item DL (RNN, Transformer models)
-\end{itemize}
-
-\emph{Argument:} We can only consider models that are available as artifacts. Theoretical papers cannot be considered, as we can't reproduce their models/apply them in our experiments
-
-
-
-
-% -----------------------------------------------------------------------
-\subsubsection{Data Set Perspective}
+\subsubsection{Data Sets for Sentiment Analysis}
 Mention data-centric AI!
 \begin{itemize}[noitemsep]
 	\item describe different task types
@@ -50,36 +36,43 @@ Mention data-centric AI!
 		\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
 		\item Data characteristica: Reddit posts vs. Twitter posts (compare avg. length of each?)
 \end{itemize}
+	\item Use SemEval later on!
+	\item We develop a data set that is a) finance-specific and b) sampled from a social media context. this is new. so far: financial, but not SM (FinancialPhrasebank) or vice versa (SemEval2017)
+\end{itemize}
+
+% -----------------------------------------------------------------------
+\subsubsection{Dictionary-based Models}
+
+
+% -----------------------------------------------------------------------
+\subsubsection{Machine-Learning-based Models}
+\begin{itemize}[noitemsep]
+	\item Note: there aren't really any non-DL ML models out there
+	\item Recurrent models
+	\item Transformer models
+	\item LLMs
 \end{itemize}
 
 
+\emph{Argument:} We can only consider models that are available as artifacts. Theoretical papers cannot be considered, as we can't reproduce their models/apply them in our experiments
 
-An example of a prompt to GPT-J \cite{gpt-j}
+
+
+
+
+
+
+
+
 
 % =======================================================================
-\subsection{Large Language Models}
-
-% =======================================================================
-\subsection{Research Gap?}
+\subsection{Research Gap}
 \begin{itemize}[noitemsep]
 	\item performance benchmarks of LLMs (and all other models too, right?) on domain-specific texts
-	\item development of a data set 	
+	\item development of a data set: There is also no data set on SM financial data 	
 \end{itemize}
 
-\begin{table}[!ht]
-\centering
-\begin{tabular}{ccc}
-	\toprule
-	& \multicolumn{2}{c}{\textbf{Finance-Specific}} \\
-	\cmidrule(l){2-3}
-	\textbf{SNS-Specific} & Yes & No\\
-	\midrule
-	Yes & Sohangir (2018)$^*$ & \makecell{VADER, AFINN,\\ SentiStrength, Twitter roBERTa} \\[15pt]
-	No & \makecell{Loughran\&McDonald,\\ FinBERT} & \makecell{SentiWordNet, ANEW,\\ LIWC, Harvard-IV-4, Hu \& Liu}\\
-	\bottomrule
-	\multicolumn{3}{l}{\footnotesize{* model artifact has not been published}}
-\end{tabular}
-\end{table}
+\input{assets/tables/static/research_gap_matrix.tex}
 
 
 
