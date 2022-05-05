@@ -16,7 +16,8 @@
 \setcounter{secnumdepth}{4}  % max. heading depth
 \usepackage[titletoc]{appendix}
 \usepackage{varwidth}
-\usepackage{makecell}
+\usepackage{makecell} % linebreaks in tables
+\usepackage[none]{hyphenat} % no hyphenation
 
 % MISC Packages
 \usepackage{booktabs}  % table rules
@@ -29,6 +30,7 @@
 \usepackage{multirow}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, trees, fit, chains,matrix,calc}  % DO NOT use "shadows". It breaks the TOC in half
+\usepackage{acronym}
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -46,11 +48,11 @@
 
 % =============================================================================
 \begin{document}
-
-\tableofcontents
-
+% Acronyms, TOC & Style Definitions
+\input{chapters/acronyms.tex}
 \newpage
-
+\tableofcontents
+\newpage
 \input{assets/style_definitions.tex}  % custom tcolorbox styles
 
 % -------------- START CONTENT --------------
@@ -69,17 +71,18 @@
 
 \newpage
 
+% ---------- Notes for Finalizing --------------
+% TODO: check whether each acronym is spelled out at first use!
+% TODO: run through grammarly
+% TODO: check page numbering starts on introduction page, NOT before
 
 % -------------- START REFERENCES --------------
 \bibliography{bibliography/refs}{}
 \bibliographystyle{apacite}
 
 % -------------- START APPENDIX --------------
-\newpage % TODO: extract to file
-\begin{appendices}
-\section{Section Heading}
-Hello Test
-\end{appendices}
+\newpage
+\input{chapters/appendices.tex}
 
 
 

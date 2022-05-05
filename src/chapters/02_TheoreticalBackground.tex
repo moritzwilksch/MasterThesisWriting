@@ -4,22 +4,46 @@
 
 % =======================================================================
 \subsection{Sentiment Analysis}  % TODO: wording
-
+text here?
 % -----------------------------------------------------------------------
 \subsubsection{Operationalization of Sentiment}
-\begin{itemize}[noitemsep]
-	\item Definition: ``Opinion'' would be a more accurate term (Munezero, 2014)
-	\item Scales: continuous $\in [-1, 1]$, discrete $\in \{pos, neg, neu\}$, 1-5 star reviews \dots
-\end{itemize}
+% todo: vvv weak line of argument
+Before surveying the literature on automated sentiment analysis models, the term ``Sentiment'' and its operationalization in the scientific literature need to be clearly defined. \shortciteA{munezero2014they} note that the terms \emph{emotion}, \emph{sentiment}, and \emph{opinion} are often used interchangeably, especially in the literature on NLP. However, there are important distinctions to be made between these terms. Emotions can be seen as moods that are not very long-lasting and are caused ``when we perceive positive or negative significant changes in our personal situation'' \shortcite[p.~3]{ben2001subtlety}. On the other hand, a sentiment is defined as ``an acquired and relatively permanent major neuropsychic disposition'' \cite[p.~16]{cattell1940sentiment}. This renders sentiments different from opinions, which are ``personal interpretations of information formed in the mind'' \cite[p.~4]{munezero2014they} and thus require a specific piece of information to interpret. %todo: wording
+Despite the differences in the definition of these terms, they are used in ambiguous ways in the field of NLP. In particular, sentiment analysis and opinion mining refer to the same area of research \cite{liu2012book} and are more prevalent than studies on emotion extraction \shortcite{ravi2015survey}, potentially because emotions are a more complex construct and cannot be fully conveyed through text \shortcite{munezero2014they}.
 
-% -----------------------------------------------------------------------
-\subsubsection{Sentiment in the Financial Context}
+Another challenge is the operationalization of emotions, sentiments, or opinions. For example, emotion extraction studies like the ones conducted by \shortciteA{li2014text} or \shortciteA{aman2007identifying} tend to frame the problem as a six-class classification task where each class corresponds to one of the six basic emotions proposed by \shortciteA{ekman1971constants}. These six emotions are happiness, sadness, anger, surprise, disgust, and fear. However, \shortciteA{aman2007identifying} point out that the inter-rater reliability for this classification task on a corpus of text can be as low as 60\%, indicating that emotion extraction is a non-trivial task even for human annotators. There are variations of this measurement scale, like the ``Profile of Mood States'' questionnaire \shortcite{mcnair1971manual} which measures a different set of six emotional states. What all of them have in common is that they utilize a multi-dimensional scale to assess emotional states. \newline
+On the other hand, the literature on the measurements of sentiment and opinion often employs simpler, even one-dimensional scales. The most prominent way of operationalizing sentiment is sentiment \emph{polarity}, which categorizes each unit of analysis as positive, negative, or, in some cases, neutral \cite{ravi2015survey}.
 
 Finance-specific, alternative operationalization of sentiment:
 \begin{itemize}[noitemsep]
 	\item VIX
 	\item Fear \& greed index, more in Aggarwal (2018)
+\end{itemize}
+
+
+\begin{itemize}[noitemsep]
+	\item Definition: ``Opinion'' would be a more accurate term (Munezero, 2014)
+	\item Scales: continuous $\in [-1, 1]$, discrete $\in \{pos, neg, neu\}$, 1-5 star reviews \dots
+	\item In this work: focus on SA and opinion mining (i.e. everything on uni-dimensional scales!)
+\end{itemize}
+
+
+\newpage %todo: remove
+
+
+
+
+\subsubsection{Applications of Sentiment Analysis}
+
+\begin{itemize}
 	\item Social sentiment @IBKR?
+\end{itemize}
+
+
+\begin{itemize}[noitemsep]
+	\item market research
+	\item return \& vola forecasting
+	\item Other applications see Ravi \& Ravi and Liu Book
 \end{itemize}
 
 % =======================================================================
@@ -31,6 +55,10 @@ Finance-specific, alternative operationalization of sentiment:
 Mention data-centric AI!
 \begin{itemize}[noitemsep]
 	\item describe different task types
+	\begin{itemize}
+		\item different scales
+		\item different UoA: Sentence, Document, Aspect-based
+	\end{itemize}
 	\item describe different domains + challenges (financial posts on social media)
 	\begin{itemize}[noitemsep]
 		\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
