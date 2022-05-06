@@ -12,7 +12,8 @@
 \usepackage{fancyhdr}
 \usepackage{parskip}  % no paragraph indent + space between paragraphs
 %\renewcommand{\baselinestretch}{1.2}  % line spacing
-\spacing{1.2}
+%\spacing{1.2}
+\setstretch{1.2}
 \setcounter{secnumdepth}{4}  % max. heading depth
 \usepackage[titletoc]{appendix}
 \usepackage{varwidth}
@@ -31,6 +32,7 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, trees, fit, chains,matrix,calc}  % DO NOT use "shadows". It breaks the TOC in half
 \usepackage{acronym}
+\usepackage{url}
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -61,6 +63,8 @@
 \input{chapters/02_TheoreticalBackground.tex}
 \newpage
 \input{chapters/03_Methodology.tex}
+\newpage
+\input{chapters/04_Results.tex}
 
 \input{assets/tikz_figures/example01.tex}
 \input{assets/tikz_figures/example02.tex}

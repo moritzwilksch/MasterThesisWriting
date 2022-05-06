@@ -4,27 +4,21 @@
 
 % =======================================================================
 \subsection{Sentiment Analysis}  % TODO: wording
-text here?
+%todo: text here?
 % -----------------------------------------------------------------------
 \subsubsection{Operationalization of Sentiment}
 % todo: vvv weak line of argument
 Before surveying the literature on automated sentiment analysis models, the term ``Sentiment'' and its operationalization in the scientific literature need to be clearly defined. \shortciteA{munezero2014they} note that the terms \emph{emotion}, \emph{sentiment}, and \emph{opinion} are often used interchangeably, especially in the literature on NLP. However, there are important distinctions to be made between these terms. Emotions can be seen as moods that are not very long-lasting and are caused ``when we perceive positive or negative significant changes in our personal situation'' \shortcite[p.~3]{ben2001subtlety}. On the other hand, a sentiment is defined as ``an acquired and relatively permanent major neuropsychic disposition'' \cite[p.~16]{cattell1940sentiment}. This renders sentiments different from opinions, which are ``personal interpretations of information formed in the mind'' \cite[p.~4]{munezero2014they} and thus require a specific piece of information to interpret. %todo: wording
 Despite the differences in the definition of these terms, they are used in ambiguous ways in the field of NLP. In particular, sentiment analysis and opinion mining refer to the same area of research \cite{liu2012book} and are more prevalent than studies on emotion extraction \shortcite{ravi2015survey}, potentially because emotions are a more complex construct and cannot be fully conveyed through text \shortcite{munezero2014they}.
 
-Another challenge is the operationalization of emotions, sentiments, or opinions. For example, emotion extraction studies like the ones conducted by \shortciteA{li2014text} or \shortciteA{aman2007identifying} tend to frame the problem as a six-class classification task where each class corresponds to one of the six basic emotions proposed by \shortciteA{ekman1971constants}. These six emotions are happiness, sadness, anger, surprise, disgust, and fear. However, \shortciteA{aman2007identifying} point out that the inter-rater reliability for this classification task on a corpus of text can be as low as 60\%, indicating that emotion extraction is a non-trivial task even for human annotators. There are variations of this measurement scale, like the ``Profile of Mood States'' questionnaire \shortcite{mcnair1971manual} which measures a different set of six emotional states. What all of them have in common is that they utilize a multi-dimensional scale to assess emotional states. \newline
-On the other hand, the literature on the measurements of sentiment and opinion often employs simpler, even one-dimensional scales. The most prominent way of operationalizing sentiment is sentiment \emph{polarity}, which categorizes each unit of analysis as positive, negative, or, in some cases, neutral \cite{ravi2015survey}. Other approaches try to evaluate the sentiment in a piece of text as a real number between -1 and 1.
+Another challenge is the operationalization of emotions, sentiments, or opinions. For example, emotion extraction studies like the ones conducted by \shortciteA{li2014text} or \shortciteA{aman2007identifying} tend to frame the problem as a six-class classification task where each class corresponds to one of the six basic emotions proposed by \shortciteA{ekman1971constants}. These six emotions are happiness, sadness, anger, surprise, disgust, and fear. However, \shortciteA{aman2007identifying} point out that the inter-rater reliability for this classification task on a corpus of text can be as low as 60\%, indicating that emotion extraction is a non-trivial task even for human annotators. There are variations of this measurement scale, like the ``Profile of Mood States'' questionnaire \shortcite{mcnair1971manual} which measures a different set of six emotional states. What all of these scales have in common is that they are multi-dimensional measurements to assess emotional states. \newline
+On the other hand, the literature on sentiment analysis and opinion mining often employs simpler, even one-dimensional scales. The most prominent way of operationalizing sentiment is sentiment \emph{polarity}, which categorizes each unit of analysis as positive, negative, or, in some cases, neutral \cite{ravi2015survey}. Other approaches try to evaluate the sentiment in a piece of text as a real number between -1 and 1, a one to five-star rating (e.g. movie or product reviews), or another numeric score outside of any pre-determined interval.
 
+In addition to these definitions which are applicable in the field of NLP, other domains have their own definitions of sentiment. For the domain of finance, \citeA{aggarwal2019defining} provides an overview of all sentiment measures that have been historically used. In recent literature, two of them stick out as the most common: the Chicago Board Options Exchange Volatility Index (VIX) and the Put/Call Ratio (PCR). The calculation of the VIX is based on options on the Standard and Poor's 500 index (S\&P500) and represents the \emph{expected} level of volatility in the next month \shortcite{cboeVIX}. Its forward-looking nature makes it different from usual sentiment measurements which are based on historical data. Given that volatility is defined as the standard deviation of returns, it is not directly comparable to sentiment classes like ``positive'' or ``negative'' although lower volatility is generally associated with higher returns \shortcite{zare2013monetary}. The mathematically simpler Put/Call Ratio is the ratio between the volume of traded put options and call options. A PCR above 1 implies that put options are being traded more than call options indicating a negative market sentiment.
 
-Finance-specific, alternative operationalization of sentiment:
-\begin{itemize}[noitemsep]
-	\item VIX
-	\item Fear \& greed index, more in Aggarwal (2018)
-\end{itemize}
 
 
 \begin{itemize}[noitemsep]
-	\item Definition: ``Opinion'' would be a more accurate term (Munezero, 2014)
-	\item Scales: continuous $\in [-1, 1]$, discrete $\in \{pos, neg, neu\}$, 1-5 star reviews \dots
 	\item In this work: focus on SA and opinion mining (i.e. everything on uni-dimensional scales!)
 \end{itemize}
 
@@ -42,8 +36,8 @@ Finance-specific, alternative operationalization of sentiment:
 
 
 \begin{itemize}[noitemsep]
-	\item market research
-	\item return \& vola forecasting
+	\item market research: opinion mining can replace surveys and focus groups and is cheaper with information abundantly available on microblogs
+	\item return \& vola forecasting (see old report)
 	\item Other applications see Ravi \& Ravi and Liu Book
 \end{itemize}
 
@@ -71,7 +65,10 @@ Mention data-centric AI!
 
 % -----------------------------------------------------------------------
 \subsubsection{Dictionary-based Models}
-
+\begin{itemize}
+	\item see VADER paper: either words are pos/neg (LIWC, GI, HuLiu) OR scored with valence (ANEW, SentiWordNet)
+	\item finish with benchmark paper from last year: VADER > everything
+\end{itemize}
 
 % -----------------------------------------------------------------------
 \subsubsection{Machine-Learning-based Models}
