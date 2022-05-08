@@ -15,31 +15,17 @@ Another challenge is the operationalization of emotions, sentiments, or opinions
 On the other hand, the literature on sentiment analysis and opinion mining often employs simpler, even one-dimensional scales. The most prominent way of operationalizing sentiment is sentiment \emph{polarity}, which categorizes each unit of analysis as positive, negative, or, in some cases, neutral \cite{ravi2015survey}. Other approaches try to evaluate the sentiment in a piece of text as a real number between -1 and 1, a one to five-star rating (e.g. movie or product reviews), or another numeric score outside of any pre-determined interval.\newline
 Besides the type of the employed sentiment measurement, the literature can also be categorized according to the unit of analysis it is concerned with. \shortciteA{liu2012book} distinguishes the units of analysis as being either document-level, sentence-level, or entity- and aspect-based. Document-level SA operates separately on every document in a corpus, e.g. each review for a product or movie or each social media post in a collection. This granularity is used most often as it aligns with the nature of a document as a self-contained piece of text by one author. For longer documents, sentence-level SA enables researchers to score sentiment on a per-sentence basis and subsequently calculate aggregate scores for the document. However, this comes at the expense of ignoring the inter-sentence context. Finally, aspect-based SA does not only generate sentiment scores but links these scores to the aspects they are referring to. This is mostly used in the analysis of product reviews, where some aspects of a product are rated positively while others are not, e.g. a computer with great battery life but low compute performance \shortcite{pontiki2016semeval}.  \textcolor{red}{ref this later: reddit is too long for doc-level}
 
-In addition to these definitions which are applicable in the field of NLP, other domains have their own definitions of sentiment. For the domain of finance, \citeA{aggarwal2019defining} provides an overview of all sentiment measures that have been historically used. In recent literature, two of them stick out as the most common: the Chicago Board Options Exchange Volatility Index (VIX) and the Put/Call Ratio (PCR). The calculation of the VIX is based on options on the Standard and Poor's 500 index (S\&P500) and represents the \emph{expected} level of volatility in the next month \shortcite{cboeVIX}. Its forward-looking nature makes it different from usual sentiment measurements which are based on historical data. Given that volatility is defined as the standard deviation of returns, it is not directly comparable to sentiment classes like ``positive'' or ``negative'' although lower volatility is generally associated with higher returns \shortcite{zare2013monetary}. The mathematically simpler Put/Call Ratio is the ratio between the volume of traded put options and call options. A PCR above 1 implies that put options are being traded more than call options indicating a negative market sentiment. Apart from these easily quantifiable versions of market sentiment in finance, the field starts recognizing that retail investor's emotions, sentiments and opinions carry valuable information. The advent of behavioral finance describes and accounts for human biases in decision making processes, some of which can be assessed using sentiment analysis \shortcite{hirshleifer2015behavioral}.
-
-In this work, \dots 
-
-\begin{itemize}[noitemsep]
-	\item In this work: focus on SA and opinion mining (i.e. everything on uni-dimensional scales!) as defined in the field of NLP. This ``Social Sentiment'' definition is also slowly getting traction in finance, btw. Also here in this work: document-level!
-\end{itemize}
+In addition to these definitions which are applicable in the field of NLP, other domains have their own definitions of sentiment. For the domain of finance, \citeA{aggarwal2019defining} provides an overview of all sentiment measures that have been historically used. In recent literature, two of them stick out as the most common: the Chicago Board Options Exchange Volatility Index (VIX) and the Put/Call Ratio (PCR). The calculation of the VIX is based on options on the Standard and Poor's 500 index (S\&P500) and represents the \emph{expected} level of volatility in the next month \shortcite{cboeVIX}. Its forward-looking nature makes it different from usual sentiment measurements which are based on historical data. Given that volatility is defined as the standard deviation of returns, it is not directly comparable to sentiment classes like ``positive'' or ``negative'' although lower volatility is generally associated with higher returns \shortcite{zare2013monetary}. The mathematically simpler Put/Call Ratio is the ratio between the volume of traded put options and call options. A PCR above 1 implies that put options are being traded more than call options indicating a negative market sentiment. Apart from these easily quantifiable versions of market sentiment in finance, the field starts recognizing that retail investors' emotions, sentiments, and opinions carry valuable information. The advent of behavioral finance describes and accounts for human biases in decision making processes, some of which can be assessed using sentiment analysis \shortcite{hirshleifer2015behavioral}.
 
 
-\newpage %todo: remove
-
-
-
-
+% -----------------------------------------------------------------------
 \subsubsection{Applications of Sentiment Analysis}
 
-\begin{itemize}
-	\item Social sentiment @IBKR?
-\end{itemize}
-
+Sentiment analysis has a plethora of applications within academia as well as industry. Researchers have used social sentiment to study reactions to adverse events like hurricanes \shortcite{yao2020domain} or the COVID-19 pandemic \shortcite{dubey2020twitter}. Literature regarding political opinion mining demonstrates that sentiment extracted from posts on the microblogging platform Twitter correlates with public opinion to a point where it can be used to forecast election results \shortcite{o2010tweets, tumasjan2010predicting}.
+Within finance, social sentiment obtained from microblogging platforms can help forecast stock market volatility \shortcite{antweiler2004all, audrino2020impact}, trading volume \shortcite{oliveira2017impact} and sometimes even future returns \shortcite{ren2018forecasting, wilksch2022predictive}.
+In industry, sentiment analysis can be utilized to replace more costly surveys about consumer sentiment or mine information from product reviews. This presents businesses with the opportunity to assess their customers' needs and pain points in a faster, more efficient way and might -- in some cases -- alleviate the need for expensive focus groups. In finance, service providers like brokerages are picking up this trend and start offering social sentiment scores as additional investment research to their customers \cite{ibkr-sentiment}.
 
 \begin{itemize}[noitemsep]
-	\item market research: opinion mining can replace surveys and focus groups and is cheaper with information abundantly available on microblogs
-	\item Sentiment extracted from posts on the microblogging platform Twitter has been shown to correlate with public opinion to a point where it can be used to forecast election results \shortcite{o2010tweets, tumasjan2010predicting}.
-	\item return \& vola forecasting (see old report)
 	\item Other applications see Ravi \& Ravi and Liu Book (pdf page 19)
 \end{itemize}
 
@@ -108,6 +94,14 @@ Mention data-centric AI!
 
 % =======================================================================
 \subsection{Conceptual Framework}
+
+In this work, \dots 
+
+\begin{itemize}[noitemsep]
+	\item In this work: focus on SA and opinion mining (i.e. everything on uni-dimensional scales!) as defined in the field of NLP. This ``Social Sentiment'' definition is also slowly getting traction in finance, btw. Also here in this work: document-level!
+\end{itemize}
+
+
 
 \input{assets/tikz_figures/conceptual_framework.tex}
 
