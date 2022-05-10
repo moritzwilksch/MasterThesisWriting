@@ -23,54 +23,37 @@ In addition to these definitions which are applicable in the field of NLP, other
 
 Sentiment analysis has a plethora of applications within academia as well as industry. Researchers have used social sentiment to study reactions to adverse events like hurricanes \shortcite{yao2020domain} or the COVID-19 pandemic \shortcite{dubey2020twitter}. Literature regarding political opinion mining demonstrates that sentiment extracted from posts on the microblogging platform Twitter correlates with public opinion to a point where it can be used to forecast election results \shortcite{o2010tweets, tumasjan2010predicting}.
 Within finance, social sentiment obtained from microblogging platforms can help forecast stock market volatility \shortcite{antweiler2004all, audrino2020impact}, trading volume \shortcite{oliveira2017impact} and sometimes even future returns \shortcite{ren2018forecasting, wilksch2022predictive}.
-In industry, sentiment analysis can be utilized to replace more costly surveys about consumer sentiment or mine information from product reviews. This presents businesses with the opportunity to assess their customers' needs and pain points in a faster, more efficient way and might -- in some cases -- alleviate the need for expensive focus groups. For example, this can be exploited by the film industry which can use social sentiment to forecast box office revenue and movie sales \shortcite{du2014box, rui2013whose}, or manufacturers who survey customers on what they like and dislike about a product (\textcolor{red}{cite aspect-based}).
+In industry, sentiment analysis can be utilized to replace more costly surveys about consumer sentiment or mine information from product reviews. This presents businesses with the opportunity to assess their customers' needs and pain points in a faster, more efficient way and might -- in some cases -- alleviate the need for expensive focus groups. For example, this can be exploited by the film industry which can use social sentiment to forecast box office revenue and movie sales \shortcite{du2014box, rui2013whose}, or manufacturers who survey customers on what they like and dislike about a product \shortcite{pontiki2016semeval}.
 In finance, service providers like brokerages are picking up this trend and start offering social sentiment scores as additional investment research to their customers \cite{ibkr-sentiment}. The common denominator between all these use cases is that they profit from more accurate SA models. Albeit automated SA models never perform with flawless accuracy, the closer they are to what humans consider to be ground truth, the better their downstream applications perform: descriptive statistics paint a more faithful picture of reality, forecasting models based on SA yield more accurate predictions (\textcolor{red}{cite!? W/A}), and for researchers, the quality of the obtained data more closely resembles the one of focus group or survey data.
 
-\begin{itemize}[noitemsep]
-	\item Other applications see Ravi \& Ravi and Liu Book (pdf page 19)
-\end{itemize}
+\subsubsection{Challenges of Sentiment Analysis}
+\label{section-sa-challenges}
+Considering the ambiguous nature of sentiments and opinions, analyzing them entails multiple challenges that need to be dealt with. According to \shortciteA{hussein2018survey}, the most common SA challenges are negation handling, domain dependence, spam detection, and ambiguity in the form of abbreviations or sarcasm. Negation handling presents an issue because very few words that might not be in direct proximity to the sentiment-laden part of a sentence can completely invert its meaning. In combination with domain-specific vocabulary, this can even be hard to spot for human annotators. For example, in finance, ``buying calls'' indicates a bullish sentiment whereas ``buying puts'' conveys a bearish sentiment toward a given stock. However, the nature of stock options as financial instruments allows a market participant to also \emph{sell} options, in which case the sentiment is reverted, and ``selling calls'' and ``selling puts'' convey bearish and bullish sentiments respectively. Thus, neither the words ``buy'' and ``sell'', nor the words ``put'' and ``call'' can be assigned a clearly positive or negative sentiment. This demonstrates the importance of context within a document and is particularly challenging for dictionary-based models which score documents on a word-by-word basis. Moreover, domain-specificity is not only a problem when it occurs in conjunction with negation. Different vocabulary, idioms, slang, and divergent interpretations of common words between domains can significantly degrade the quality of a SA. \citeA{ravi2015survey} provide an overview of work that addresses the challenge of cross-domain SA, but conclude that it is still an unsolved problem. Consequently, researchers should be careful when applying generic SA techniques to domain-specific corpora and vice versa. On data sets obtained from social media platforms, spam detection presents another issue that needs careful consideration. Many posts on social media are advertisements or were created by automated robots that post similar content multiple times. Not only can such duplicates ruin the quality of a collected data set, but they also dilute the content posted by real humans as spammers try to blend in as much as possible. Removing spam is viable through heuristics developed after manual inspection of a data set, for example by using word lists \shortcite{yao2020domain}. However, the precision of such methods must be scrutinized to not remove too much informative human-created content. Arguably the hardest challenge is coping with ambiguity and sarcasm. Using text as a medium of exchange of opinions can make these stylistic devices hard to identify even for humans. The sentence ``Yeah, company X is the best investment in the world...'' requires intonation or other cues to convey whether this is a sarcastic note or a serious opinion. This makes SA a problem on which even humans might not unanimously agree. If such uncertainty is present in a corpus of labeled data, it will also be present in any SA model that is developed based on this corpus.
+
 
 % =======================================================================
 \subsection{Automated Sentiment Analysis}
 
-
 % -----------------------------------------------------------------------
-\subsubsection{Data Sets for Sentiment Analysis}
+\subsubsection{Data Sets}
 
 Every automated SA model -- whether dictionary-based or machine-learning-based -- requires a set of data to be built upon. For dictionaries, humans analyze large quantities of data to develop sets of words or phrases that carry sentiment and compile them in a machine-usable form. Machine learning models try to automate this process but still need a training data set that is often even larger than the ones used in manual dictionary creation. However, only a limited number of standardized, annotated data sets exist, as it is costly and labor-intensive to create such a data set. Therefore, many of the SA models in the literature have been trained or evaluated on similar data sets. Table \ref{most-used-datasets} provides an overview of the most frequently used data sets for conducting SA on texts from the domain of finance or social media.
 
 \input{assets/tables/static/datasets_overview.tex}
 
- \shortciteA{malo2014good} compiled the \emph{Financial Phrasebank}, a data set of several thousand news headlines where each headline has been annotated as either positive, negative, or neutral by 16 independent annotators. For SA on social media posts, \shortciteA{rosenthal2017semeval} provide \emph{SemEval-2017 Task 4}, a large sample of tweets on current events, again labeled as one of three sentiment polarity classes. The largest corpus, \emph{Reuters TRC2}, released by \shortciteA{reuters-trc2}, contains 1.8 million Reuters news articles on various topics, including financial markets. However, the data set does not come with any kind of labels and is not exclusively geared towards performing SA. Consequently, it cannot be used for constructing dictionaries or training supervised machine learning models. Despite that, it can be used for pre-training large language models (LLM) which require vast unlabeled corpora for unsupervised training (see section \textcolor{red}{REF LLM sec}).\newline
+The largest corpus, \emph{Reuters TRC2}, released by \shortciteA{reuters-trc2}, contains 1.8 million Reuters news articles on various topics, including financial markets. However, the data set does not come with any kind of labels and is not exclusively geared towards performing SA. Consequently, it cannot be used for constructing dictionaries or training supervised machine learning models. Despite that, it can be used for pre-training large language models (LLM) which require vast unlabeled corpora for unsupervised training (see section \textcolor{red}{REF LLM sec}). \shortciteA{malo2014good} compiled the \emph{Financial Phrasebank}, a data set of several thousand news headlines where each headline has been annotated as either positive, negative, or neutral by 16 independent annotators. For SA on social media posts, \shortciteA{rosenthal2017semeval} provide \emph{SemEval-2017 Task 4}, a large sample of generic tweets on current events, again labeled as one of three sentiment polarity classes. On the other hand, \emph{SemEval-2017 Task 5} \shortcite{cortis2017semeval} provides data sampled from the financial social media context. The data set contains a subtask (``subtask 1'') which consists of 2,510 labeled messages from StockTwits and Twitter. For each message, three annotators assign each company that is mentioned a sentiment score between -1 and 1. The scores are then consolidated by a fourth expert. The \emph{Fin-SoMe} data set published by \shortciteA{chen2020finsome} consists of 10,000 social media posts from StockTwits. The authors manually annotated the posts, although posts on StockTwits can be assigned a ``bullish'' or ``bearish'' label by the post creator. However, as \shortciteA{chen2020finsome} find, these labels are often wrong.
+
  It is important to acknowledge the domain a training data set is sampled from as it significantly impacts the performance of the resulting classifier on its target data. For example, \shortciteA{al2020evaluating} show that researchers should always use models that can cope with slang, emojis, and typos when conducting SA on social media data. On the other hand, working with corporate financial filings requires a whole new approach and renders generic models ineffective \shortcite{loughranMcD2011}. Besides the vastly different vocabulary used in different domains, the complexity of a document can also require a change of the unit of analysis. Posts on the social network \emph{Reddit} tend to be much longer than Tweets, which are restricted to 280 characters in the first place. Thus, framing the SA of social media posts as a three-class classification problem might be adequate for Tweets (as a Tweet is likely to fall in one of the positive, negative, or neutral classes), but not so much for Reddit posts. Elaborate texts that span multiple paragraphs and might be a reply to a previous conversation can rarely be categorized as belonging to one of three classes. In these cases, sentence- or paragraph-based analysis is more suitable. \textcolor{blue}{TODO: actually pull Reddit posts and provide descriptive stats?}
+ 
 
 
 
-
-
-Mention data-centric AI!
-\begin{itemize}[noitemsep]
-	\item describe different task types
-	\begin{itemize}
-		\item different scales
-		\item different UoA: Sentence, Document, Aspect-based
-	\end{itemize}
-	\item describe different domains + challenges (financial posts on social media)
-	\begin{itemize}[noitemsep]
-		\item Platforms: Twitter, StockTwits, Reddit, Crypto-specific stuff
-		\item Data characteristica: Reddit posts vs. Twitter posts (compare avg. length of each?)
-\end{itemize}
-	\item Use SemEval later on!
-	\item We develop a data set that is a) finance-specific and b) sampled from a social media context. this is new. so far: financial, but not SM (FinancialPhrasebank) or vice versa (SemEval2017)
-\end{itemize}
 
 % -----------------------------------------------------------------------
 \subsubsection{Dictionary-based Models}
-\begin{itemize}
-	\item see VADER paper: either words are pos/neg (LIWC, GI, HuLiu) OR scored with valence (ANEW, SentiWordNet)
-	\item finish with benchmark paper from last year: VADER > everything
-\end{itemize}
+Automated SA models can be categorized into dictionary- and machine-learning-based methods. Dictionary-based SA is a common approach that is liked for its simplicity. SA dictionaries are word lists that assign each word a score. Simple scoring methods might classify single words as positive or negative, for example LIWC \shortcite{pennebaker2001linguistic}, Harvard General Inquirer \shortcite{stone1966general}, or Opinion Observer \shortcite{liu2005opinion}. Others rate them on more sophisticated numeric scales, like ANEW \shortcite{bradley1999affective}, SentiWordNet \shortcite{baccianella2010sentiwordnet}, or VADER \shortcite{hutto2014vader}. The sentiment for a document is subsequently calculated as an aggregate of all word scores. This methodology makes dictionaries explainable and computationally cheap at inference time but does not come without drawbacks. First, the dictionary needs to be compiled by humans which is time-consuming and requires decisions regarding scales and scoring which significantly impact the performance of the final model. Second, the rigid approach of gathering a list of words can fail if documents contain few or none of the words in the list. This makes it especially hard to apply lexicon-based approaches on social media content which is riddled with typos, slang words, and emojis. Models that are not designed for this type of content often classify texts as neutral, simply for the lack of any matching words. Finally, the typical challenges of SA (see section \ref{section-sa-challenges}) have to be addressed manually. For example, \citeA{hutto2014vader} designed VADER by integrating a set of heuristics for handling negation, punctuation, and capitalization as degree modifiers of sentiment. These features make VADER particularly attractive to researchers working with social media content, as the integrated heuristics make it outperform all its competitors on social media content \cite{al2020evaluating}.
 
+>> more?
 % -----------------------------------------------------------------------
 \subsubsection{Machine-Learning-based Models}
 \begin{itemize}[noitemsep]
@@ -95,8 +78,17 @@ Mention data-centric AI!
 % =======================================================================
 \subsection{Research Gap}
 \begin{itemize}[noitemsep]
+	\item There exist data sets and models, mostly for StockTwits\dots
+	\begin{itemize}[noitemsep]
+		\item Data sets: SemEval Task 5 (StockTwits + Twitter), Fin-SoMe (StockTwits)
+		\item Models: Pontes21, NTUSD-Fin (Chen et al., 2018), Li17
+	\end{itemize}
+	\item No data set on only Twitter
+\end{itemize}
+-------------------------------------------------
+\begin{itemize}[noitemsep]
 	\item performance benchmarks of LLMs (and all other models too, right?) on domain-specific texts
-	\item development of a data set: There is also no data set on SM financial data 	
+	\item We develop a data set that is a) finance-specific and b) sampled from a social media context (Twitter!) 	
 \end{itemize}
 
 \input{assets/tables/static/research_gap_matrix.tex}
