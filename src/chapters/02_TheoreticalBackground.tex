@@ -4,7 +4,6 @@
 
 % =======================================================================
 \subsection{Sentiment Analysis}  % TODO: wording
-%todo: text here?
 % -----------------------------------------------------------------------
 \subsubsection{Operationalization of Sentiment}
 % todo: vvv weak line of argument
@@ -58,11 +57,51 @@ The domain of finance and investing entails very specific jargon and words that 
 Sentiment Analysis lends itself to being automated through the use of machine learning (ML) models instead of manual dictionary creation. Machine learning models can be trained on large corpora of labeled data, enabling researchers to leave it to mathematical optimization algorithms to decide whether a word influences sentiment positively or negatively. While the creation of such training sets still requires significant resources and manual labor, framing SA as a machine learning problem allows for direct optimization of the correct target \textcolor{red}{wording!}. Most applications of SA are not concerned with assigning a single sentiment score per word. Rather, the unit of analysis is either a sentence or a short document. ML techniques can directly optimize the objective of classifying as many documents or sentences as correctly as possible. This alleviates the need for heuristics on how to aggregate word-based scores on a sentence or document level.\newline
 For the most part, the literature on ML-based SA can be categorized as employing either machine-learning- or deep-learning-based models. Although the discipline of deep learning (DL) is a subset of machine learning \shortcite{Goodfellow-et-al-2016}, we distinguish between the two in this work for the following reason: Deep learning utilizes deep neural networks, which are an order of magnitude more complex and expensive to train and deploy than other ML models. While neural networks are more flexible, can learn more complex dependencies, and have shown outstanding performance on many tasks in NLP, simpler ML models like the logistic regression, Na\"ive Bayes, or Support Vector Machines can still yield usable results at a fraction of the cost of large DL models. We will henceforth refer to neural-network-based models as \emph{deep learning models}, and other, less complex models as \emph{machine learning models}.
 
-The most commonly applied ML models for SA are Support Vector Machines (SVM), Na\"ive Bayes classifiers, tree-based models, and logistic regression \shortcite{ravi2015survey}. SVM have been shown to achieve an accuracy of around 75\% on the binary classification task of assigning finance-specific posts on StockTwits a ``bullish'' or ``bearish'' label \cite{renault2020sentiment}. For the same two-class sentiment polarity classification task of tweets that are not domain-specific, they can score accuracies as high as 83\% \cite{mishev2020evaluation, tang2014learning}. Na\"ive Bayes, as well as tree-based models, exhibit similar performance characteristics on generic texts \shortcite{mishev2020evaluation}.
- %todo: compare my accuracy later!
-It is noteworthy that while there is plenty of literature on the application of ML models to the task of SA, most of the models are developed using generic data sets like reviews or social media posts and are not published as usable artifacts. This is opposed to many dictionary-based models as well as deep learning models that are available to researchers in the form of downloadable models or programming libraries. Because of the applied nature of this work we can only consider models that are published as artifacts that can be used to reproduce benchmarks.
+The most commonly applied ML models for SA are Support Vector Machines (SVM), Na\"ive Bayes classifiers, tree-based models, and logistic regression \shortcite{ravi2015survey}. SVM have been shown to achieve an accuracy of around 75\% on the binary classification task of assigning finance-specific posts on StockTwits a ``bullish'' or ``bearish'' label \cite{renault2020sentiment}. For the same two-class sentiment polarity classification task of tweets that are not domain-specific, they can score accuracies as high as 83\% \cite{mishev2020evaluation, tang2014learning}. Na\"ive Bayes, as well as tree-based models, exhibit similar performance characteristics on generic texts \shortcite{mishev2020evaluation}. All of these ML models work on the Bag-of-Words (BoW) representation of text data. BoW is a technique to represent texts as numeric values, which is necessary for inputing them to any ML model. Figure \ref{figure-bow} demonstrates an example of how BoW operates.
 
-In other areas in the field of NLP like question answering or natural text generation the prevailing models are based on deep learning.
+\input{assets/tikz_figures/bow.tex}
+
+ First, each documents' text is split into words. Then, after compiling a set of all unique words from all documents (the vocabulary), a matrix $M \in \mathbb{R}^{d \times w}$ can be constructed where $d$ is the number of documents and $v$ is the number of unique words (vocabulary size). Now, each entry $m_{i,j}$ can represent either a binary indicator of whether document $i$ contains word $j$ or the number of occurrences of term $j$ in document $i$. For the example in Figure \ref{figure-bow}, the text \emph{``sell this stock''} can be represented as the vector $(0,0,1,1,1)$. While BoW representations are fast and easy to construct, they do not retain the \emph{order} of the words in the text and hence lose important information.
+ %todo: compare my accuracy later!
+
+In other areas in the field of NLP like question answering or natural text generation all prevailing models are based on deep learning. Accordingly, they have also been applied to the task of SA, which is usually framed as a text classification problem. 
+
+\textcolor{red}{[lego block: RNN \& representation of text data]} Unlike ML models, DL models in NLP usually do not operate on text in its BoW representation. A more common representation for text data in deep learning are word embeddings. Word embeddings work like a look-up table. Every word is assigned a $d$-dimensional vector $v \in \mathbb{R}^{d}$. A document can consequently be represented as a sequence of such vectors. These vector representations are not chosen arbitrarily. Either, they can be learned during training of the final classification model. In this case, words that lie close together in the embedding vector space often occur in documents that belong to the same class. The proximity in the vector space is defined as the cosine similarity $S_C$, which for two vectors $\textbf{a}$ and $\textbf{b}$ is given as
+
+\begin{equation}
+	S_c(\textbf{a}, \textbf{b}) = \frac{\textbf{a} \cdot \textbf{b}}{\Vert \textbf{a} \Vert \cdot \Vert \textbf{b} \Vert}
+\end{equation} 
+
+Alternatively, multiple pre-trained word embeddings have been developed in previous studies. The most prominent set of word embeddings is GloVe \shortcite{pennington2014glove} which has been trained on word co-occurence within a corpus of wikipedia and web data. Therefore, words that are close together in the 300-dimensional embedding space frequently co-occur in natural English language. Table \ref{table-glove-demo} displays a set of word with their corresponding nearest neighbors in the embedding space. It confirms that after training on extensive corpora, GloVe embeddings manage to capture a considerable amount of semantic information. However, it is also evident that nearest neighbors in embedding space do not necessarily share a meaning. The words \emph{buy} and \emph{sell} have very similar word vectors ($S_c = 0.86$) while being antonyms of one another.
+
+\begin{table}[!ht]
+\centering
+
+\begin{tabular}{clllll}
+\toprule
+\textbf{Word} & \multicolumn{5}{c}{\textbf{Closest neighbors in embedding space}}\\
+\midrule
+
+
+\textbf{stock} & shares & stocks & market & exchange & trading\\
+\textbf{buy} & sell & purchase & buying & bought & acquire\\
+\textbf{money} & funds & cash & fund & donations & pay\\
+\textbf{company} & companies & subsidiary & firm & co. & venture\\
+
+
+
+
+\bottomrule
+\end{tabular}
+\caption{A set of four words and their closest neighbors in embedding space}
+\label{table-glove-demo}
+\end{table}
+
+%\input{assets/tikz_figures/word_embeddings.tex}
+
+
+Instead, there are two common types of neural networks that can harness the sequential nature of text data: recurrent neural networks and transformer neural networks.
+Recurrent neural networks (RNN)
 
 
 
@@ -75,6 +114,8 @@ In other areas in the field of NLP like question answering or natural text gener
 	\item pre-processing / text representation (see section \ref{section-data-preprocessing})
 	\item $\rightarrow$ just mention technicalities here briefly, cover tech deets in methodology??
 \end{itemize}
+
+It is noteworthy that while there is plenty of literature on the application of ML models to the task of SA, most of the models are developed using generic data sets like reviews or social media posts and are not published as usable artifacts. This is opposed to many dictionary-based models as well as deep learning models that are available to researchers in the form of downloadable models or programming libraries. Because of the applied nature of this work we can only consider models that are published as artifacts that can be used to reproduce benchmarks.
 
 
 \subsubsection{Challenges of Sentiment Analysis}
@@ -89,13 +130,14 @@ Considering the ambiguous nature of sentiments and opinions, analyzing them enta
 
 % =======================================================================
 \subsection{Research Gap}
+\label{section-research-gap}
 The literature on SA has devised plenty of theoretical contributions as well as functional model artifacts. However, almost none of these contributions apply to the domain of SA of financial social media posts. Many cover movie or product reviews, because labeled data is abundantly available in the form of star ratings that are attached to the textual review. Others comprise generic social media posts and address challenges like colloquial language and the use of emojis but are still not applicable to domain-specific texts \shortcite{mishev2020evaluation}. The few works that cover finance-related texts \cite{loughranMcD2011, araci2019finbert}  do not work on social media content because of its inherent challenges for automated SA. Table \ref{table-research-gap} provides an overview of the SA models that are predominantly used in the literature. The majority of them are dictionary-based unless otherwise noted ($\dagger$).
 
 \input{assets/tables/static/research_gap_matrix.tex}
 
 Most models, especially older ones developed before 2010, are neither finance-specific nor do they work on social media content. In recent years, the development of models that work on SM content has flourished and made major advancements, for example with the introduction of VADER \shortcite{hutto2014vader}, or, more recently, Twitter roBERTa \shortcite{barbieri2020tweeteval}. The literature on finance-specific texts is scarce. \shortciteA{loughranMcD2011} published a word list based on 10-K corporate filings, and more recently \shortciteA{araci2019finbert} published FinBERT which has been trained on news headlines. The gap in the existing research is consequently the intersection of financial social media posts. While \shortciteA{sohangir2018bigdata} experiment with deep learning models for predicting sentiment labels on StockTwits, they do not publish the final model artifact. This leaves NTUSD-Fin by \shortciteA{chen2018ntusd} who also developed a model for classifying StockTwits posts. Based on the labels that StockTwits users assign to their posts, they assemble a list of words with corresponding sentiment scores which is available upon request to the authors.
 
-In order to add to the body of existing literature, this work aims to develop a sentiment model designed for working on financial social media posts. The work \textcolor{red}{REP} will be guided by the following research questions.\newline
+In order to add to the body of existing literature, this work aims to develop a sentiment model designed for working on financial social media posts. It will be guided by the following research questions.\newline
 \textbf{\emph{RQ1:}} How can we design a functional model artifact that can extract an author's sentiment from financial social media posts?\newline
 \textbf{\emph{RQ2:}} Does this model artifact outperform existing models from either the domain of financial texts or generic social media posts?\newline
 \textbf{\emph{RQ3:}} Can a simple, domain-specific model outperform more generic LLMs?\newline
@@ -103,27 +145,16 @@ In order to add to the body of existing literature, this work aims to develop a 
 
 \emph{RQ1} is aimed at the development and publication of a working model artifact. This is important to further the research in the field and enable other researchers and practitioners to run benchmarks on their own data sets to enhance the understanding of circumstances under which existing SA models do or do not work well. \emph{RQ2} studies the performance differences one can expect from using domain-specific models over generic models on domain-specific texts. This information will empower researchers to make better decisions regarding the SA model they use for their research. \emph{RQ3} tries to assess how LLMs, which are commonly used but expensive to train and deploy, compare to smaller models that have been trained on the target domain. It has been shown that for domain-specific computer vision applications, smaller, specialized models can outperform large off-the-shelf models for a fraction of the training- and deployment costs \shortcite{harl2022light}. This raises the question of whether the same holds for SA applications. Finally, \emph{RQ4} scrutinizes the differences between the domain of Twitter posts and StockTwits posts. This will help guide future research and might warrant the applications of models trained on StockTwits posts to other social media platforms and vice versa.
 
-\begin{itemize}[noitemsep]
-	\item Models: Pontes21, NTUSD-Fin (Chen et al., 2018), Li17
-\end{itemize}
-
-
-
-
-
-
 
 % =======================================================================
 \subsection{Research Paradigm}
 
-In this work, \dots 
+To answer the research questions posed in section \ref{section-research-gap} we adapt the process of Design Science Research as proposed by \shortciteA{kuechler2012dsrprocess} and \citeA{gregor2013dsr}. It consists of a series of five steps: Being aware of the problem, suggesting possible solutions, developing artifacts that instantiate these solutions, evaluating whether the developed artifacts solve the problem, and presenting a coherent conclusion that fosters future research \cite{kuechler2012dsrprocess}. Figure \ref{figure-dsr-process} displays the process steps along with the concrete application to answering the research questions presented in this work.
 
 \input{assets/tikz_figures/dsr_process.tex}
 
-\begin{itemize}[noitemsep]
-	\item use design science research \cite{gregor2013dsr}
-	\item In this work: focus on SA and opinion mining (i.e. everything on uni-dimensional scales!) as defined in the field of NLP. This ``Social Sentiment'' definition is also slowly getting traction in finance, btw. Also here in this work: document-level!
-\end{itemize}
+The problem has been identified as a the lack of functional model artifacts that can be used for automated SA of financial social media posts. Consequently, we suggest developing such a model that can extract the opinion of an author regarding an investment from a social media post. Considering the lack of data in this domain, the development process will entail data collection, cleaning, and labeling. Subsequently, we can experiment with different ML and DL-based modeling approaches. All of these models will be evaluated and compared against existing models from the domain of finance or SM. Finally, the best models will be deployed as an installable python library, such that future research can conduct further benchmarking and improve upon the results.
+
 
 
 

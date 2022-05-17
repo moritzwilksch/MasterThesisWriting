@@ -10,16 +10,16 @@
 	\node[draw=grey, right=0.25cm of 1,align=left,text width=9cm,minimum height=1.4cm](1text) {Previous literature often uses generic models for SA on financial social media posts because there are few functional artifacts for this domain.};
 	
 	\node[draw=grey,below=0.25cm of 1.south,fill=lightgrey,text width=3cm,align=center,minimum height=1.1cm](2) {\textbf{Suggestion}};
-	\node[draw=grey,below=0.25cm of 1text,align=left,text width=9cm,minimum height=1.1cm](2text) {Develop a domain-specific model that can classify financial Tweets as bullish, bearish, or neutral.};
+	\node[draw=grey,below=0.25cm of 1text,align=left,text width=9cm,minimum height=1.1cm](2text) {Develop a domain-specific model that can classify financial SM posts as bullish, bearish, or neutral.};
 	
-	\node[draw=grey,below=0.25cm of 2.south,fill=lightgrey,text width=3cm,align=center,minimum height=1.5cm](3) {\textbf{Development}};
-	\node[draw=grey,below=0.25cm of 2text,align=left,text width=9cm,minimum height=1.5cm](3text) {Collect and label data, clean and preprocess text, build and compare multiple ML \& DL models, deploy the best models as a python library.};
+	\node[draw=grey,below=0.25cm of 2.south,fill=lightgrey,text width=3cm,align=center,minimum height=1.1cm](3) {\textbf{Development}};
+	\node[draw=grey,below=0.25cm of 2text,align=left,text width=9cm,minimum height=1.1cm](3text) {Collect and label data, clean and preprocess text, build and compare multiple ML \& DL models};
 	
 	\node[draw=grey,below=0.25cm of 3.south,fill=lightgrey,text width=3cm,align=center,minimum height=1cm](4) {\textbf{Evaluation}};
 	\node[draw=grey,below=0.25cm of 3text,align=left,text width=9cm,minimum height=1cm](4text) {Compare the achieved performance against the one of other models from the domain of finance or SM.};
 
-	\node[draw=grey,below=0.25cm of 4.south,fill=lightgrey,text width=3cm,align=center,minimum height=0.6cm](5) {\textbf{Conclusion}};
-	\node[draw=grey,below=0.25cm of 4text,align=left,text width=9cm,minimum height=0.6cm](5text) {Recommend optimal SA model for different use cases.};	
+	\node[draw=grey,below=0.25cm of 4.south,fill=lightgrey,text width=3cm,align=center,minimum height=1.1cm](5) {\textbf{Conclusion}};
+	\node[draw=grey,below=0.25cm of 4text,align=left,text width=9cm,minimum height=1.1cm](5text) {Recommend SA models for different use cases and deploy the best models as a python library.};	
 	
 	% Legend
 	\node[above=0.05cm of 1] {\emph{Process Step}};
@@ -31,6 +31,6 @@
 	\draw[-{Latex[length=2.5mm, width=2mm]}] (3) -- (4);
 	\draw[-{Latex[length=2.5mm, width=2mm]}] (4) -- (5);		
 	\end{tikzpicture}
-	\caption{Design Science Research process adapted from \protect\shortciteA{gregor2013dsr} \textcolor{blue}{applied to the topic of this work}}
-	\label{dsr-process}
+	\caption{Design Science Research process adapted from \protect\shortciteA{kuechler2012dsrprocess} \textcolor{blue}{applied to the topic of this work}}
+	\label{figure-dsr-process}
 \end{figure}

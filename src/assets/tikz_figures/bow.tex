@@ -1,0 +1,35 @@
+\definecolor{lightgrey}{HTML}{EEEEEE}
+\definecolor{grey}{HTML}{BBBBBB}
+
+
+
+
+\begin{figure}[!ht]
+	\centering
+	\small
+	\begin{tikzpicture}
+	
+
+		
+%	% header
+	\matrix[matrix of nodes,nodes={minimum width=3em,anchor=south},row sep=0.5em,row 1/.style={nodes={draw,text height=0.7em,text centered}},column sep=0.3em](mtx) {\textbf{do} & \textbf{not} & \textbf{sell} & \textbf{stock} & \textbf{this} \\ 0 & 0 & 1 & 1 & 1 \\ 1 & 1 & 1 & 0 & 0\\};
+	
+		% txt
+	\node[text width=7em,align=center,left=3em of mtx-2-1](txt1){\emph{``sell this stock''}};
+	\node[left=3em of mtx-3-1,text width=7em,align=center](txt2) {\emph{``do not sell''}};
+
+\draw[->, shorten >= 0.5em](txt1) -- (mtx-2-1);
+\draw[->, shorten >= 0.5em](txt2) -- (mtx-3-1);
+
+%\node[above=0.5em of mtx-1-3](w){Words};
+%\node at (w -| txt1) {Texts};
+
+
+	\node[draw,fit=(mtx-2-1) (mtx-2-2) (mtx-2-3) (mtx-2-4) (mtx-2-5),inner sep=-0.1em,dashed](border){};
+
+
+
+	\end{tikzpicture}
+	\caption{Representing text using a Bag of Words}
+	\label{figure-bow}
+\end{figure}
