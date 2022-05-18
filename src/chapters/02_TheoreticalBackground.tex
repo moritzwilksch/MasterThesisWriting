@@ -57,7 +57,9 @@ The domain of finance and investing entails very specific jargon and words that 
 Sentiment Analysis lends itself to being automated through the use of machine learning (ML) models instead of manual dictionary creation. Machine learning models can be trained on large corpora of labeled data, enabling researchers to leave it to mathematical optimization algorithms to decide whether a word influences sentiment positively or negatively. While the creation of such training sets still requires significant resources and manual labor, framing SA as a machine learning problem allows for direct optimization of the correct target \textcolor{red}{wording!}. Most applications of SA are not concerned with assigning a single sentiment score per word. Rather, the unit of analysis is either a sentence or a short document. ML techniques can directly optimize the objective of classifying as many documents or sentences as correctly as possible. This alleviates the need for heuristics on how to aggregate word-based scores on a sentence or document level.\newline
 For the most part, the literature on ML-based SA can be categorized as employing either machine-learning- or deep-learning-based models. Although the discipline of deep learning (DL) is a subset of machine learning \shortcite{Goodfellow-et-al-2016}, we distinguish between the two in this work for the following reason: Deep learning utilizes deep neural networks, which are an order of magnitude more complex and expensive to train and deploy than other ML models. While neural networks are more flexible, can learn more complex dependencies, and have shown outstanding performance on many tasks in NLP, simpler ML models like the logistic regression, Na\"ive Bayes, or Support Vector Machines can still yield usable results at a fraction of the cost of large DL models. We will henceforth refer to neural-network-based models as \emph{deep learning models}, and other, less complex models as \emph{machine learning models}.
 
-The most commonly applied ML models for SA are Support Vector Machines (SVM), Na\"ive Bayes classifiers, tree-based models, and logistic regression \shortcite{ravi2015survey}. SVM have been shown to achieve an accuracy of around 75\% on the binary classification task of assigning finance-specific posts on StockTwits a ``bullish'' or ``bearish'' label \cite{renault2020sentiment}. For the same two-class sentiment polarity classification task of tweets that are not domain-specific, they can score accuracies as high as 83\% \cite{mishev2020evaluation, tang2014learning}. Na\"ive Bayes, as well as tree-based models, exhibit similar performance characteristics on generic texts \shortcite{mishev2020evaluation}. All of these ML models work on the Bag-of-Words (BoW) representation of text data. BoW is a technique to represent texts as numeric values, which is necessary for inputing them to any ML model. Figure \ref{figure-bow} demonstrates an example of how BoW operates.
+The most commonly applied ML models for SA are Support Vector Machines (SVM), Na\"ive Bayes classifiers, tree-based models, and logistic regression \shortcite{ravi2015survey}. SVM have been shown to achieve an accuracy of around 75\% on the binary classification task of assigning finance-specific posts on StockTwits a ``bullish'' or ``bearish'' label \cite{renault2020sentiment}. For the same two-class sentiment polarity classification task of tweets that are not domain-specific, they can score accuracies as high as 83\% \cite{mishev2020evaluation, tang2014learning}. Na\"ive Bayes, as well as tree-based models, exhibit similar performance characteristics on generic texts \shortcite{mishev2020evaluation}. 
+
+\textcolor{red}{[Block: BoW representation]}All of these ML models work on the Bag-of-Words (BoW) representation of text data. BoW is a technique to represent texts as numeric values, which is necessary for inputing them to any ML model. Figure \ref{figure-bow} demonstrates an example of how BoW operates.
 
 \input{assets/tikz_figures/bow.tex}
 
@@ -66,13 +68,16 @@ The most commonly applied ML models for SA are Support Vector Machines (SVM), Na
 
 In other areas in the field of NLP like question answering or natural text generation all prevailing models are based on deep learning. Accordingly, they have also been applied to the task of SA, which is usually framed as a text classification problem. 
 
-\textcolor{red}{[lego block: RNN \& representation of text data]} Unlike ML models, DL models in NLP usually do not operate on text in its BoW representation. A more common representation for text data in deep learning are word embeddings. Word embeddings work like a look-up table. Every word is assigned a $d$-dimensional vector $v \in \mathbb{R}^{d}$. A document can consequently be represented as a sequence of such vectors. These vector representations are not chosen arbitrarily. Either, they can be learned during training of the final classification model. In this case, words that lie close together in the embedding vector space often occur in documents that belong to the same class. The proximity in the vector space is defined as the cosine similarity $S_C$, which for two vectors $\textbf{a}$ and $\textbf{b}$ is given as
+\textcolor{red}{[Block: RNN \& representation of text data]} Unlike ML models, DL models in NLP usually do not operate on text in its BoW representation. A more common representation for text data in deep learning are word embeddings. Word embeddings work like a look-up table. Every word is assigned a $d$-dimensional vector $v \in \mathbb{R}^{d}$. A document can consequently be represented as a sequence of such vectors. These vector representations are not chosen arbitrarily. Either, they can be learned during training of the final classification model. In this case, words that lie close together in the embedding vector space often occur in documents that belong to the same class. The proximity in the vector space is defined as the cosine similarity $S_C$, which for two vectors $\textbf{a}$ and $\textbf{b}$ is given as
 
 \begin{equation}
 	S_c(\textbf{a}, \textbf{b}) = \frac{\textbf{a} \cdot \textbf{b}}{\Vert \textbf{a} \Vert \cdot \Vert \textbf{b} \Vert}
 \end{equation} 
 
-Alternatively, multiple pre-trained word embeddings have been developed in previous studies. The most prominent set of word embeddings is GloVe \shortcite{pennington2014glove} which has been trained on word co-occurence within a corpus of wikipedia and web data. Therefore, words that are close together in the 300-dimensional embedding space frequently co-occur in natural English language. Table \ref{table-glove-demo} displays a set of word with their corresponding nearest neighbors in the embedding space. It confirms that after training on extensive corpora, GloVe embeddings manage to capture a considerable amount of semantic information. However, it is also evident that nearest neighbors in embedding space do not necessarily share a meaning. The words \emph{buy} and \emph{sell} have very similar word vectors ($S_c = 0.86$) while being antonyms of one another.
+Alternatively, multiple pre-trained word embeddings have been developed in previous studies. The most prominent set of word embeddings is GloVe \shortcite{pennington2014glove} which has been trained on word co-occurence within a corpus of Wikipedia and web data. Therefore, words that are close together in the 300-dimensional embedding space frequently co-occur in natural English language. Table \ref{table-glove-demo} displays a set of word with their corresponding nearest neighbors in the embedding space. It confirms that after training on extensive corpora, GloVe embeddings manage to capture a considerable amount of semantic information. However, it is also evident that nearest neighbors in embedding space do not necessarily share a meaning. The words \emph{buy} and \emph{sell} have very similar word vectors ($S_c = 0.86$) while being antonyms of one another.
+
+\input{assets/tables/static/glove-embeddings.tex}
+
 
 \begin{table}[!ht]
 \centering
@@ -82,14 +87,10 @@ Alternatively, multiple pre-trained word embeddings have been developed in previ
 \textbf{Word} & \multicolumn{5}{c}{\textbf{Closest neighbors in embedding space}}\\
 \midrule
 
-
 \textbf{stock} & shares & stocks & market & exchange & trading\\
 \textbf{buy} & sell & purchase & buying & bought & acquire\\
 \textbf{money} & funds & cash & fund & donations & pay\\
 \textbf{company} & companies & subsidiary & firm & co. & venture\\
-
-
-
 
 \bottomrule
 \end{tabular}
@@ -97,18 +98,24 @@ Alternatively, multiple pre-trained word embeddings have been developed in previ
 \label{table-glove-demo}
 \end{table}
 
+
+
+
 %\input{assets/tikz_figures/word_embeddings.tex}
 
 
-Instead, there are two common types of neural networks that can harness the sequential nature of text data: recurrent neural networks and transformer neural networks.
-Recurrent neural networks (RNN)
+Once words are represented in the form of numeric word embeddings, they can be used as input to neural networks. A trivial way of constructing the input to a neural net from multiple word embeddings is to just concatenate them. However, this would not preserve the sequential order of words in a piece of text. Instead, there are two common types of neural networks that can directly work with the sequential nature of text data: recurrent neural networks and transformer neural networks. Recurrent neural networks (RNN) consume the input sequence one word at a time, as displayed in Figure \ref{figure-rnn}. At each time step $t$, the RNN processes two inputs: 1) the word embedding of the word at step $t$, $w_t$ and 2) the output of the previous step $o_{t-1}$, which is an $h$-dimensional vector where $h$ is a hyperparameter. This $h$-dimensional intermediate representation is also called a ``hidden state''. After the last step, the last hidden state represents the entire text sequence in one vector. This vector can then be used by other layers in the neural network to perform classification. 
 
+\input{assets/tikz_figures/rnn.tex}
+
+There are various different types of RNN layers which determine how output $o_t$ is calculated based on inputs $w_t$ and $o_{t-1}$. The simplest one, a vanilla RNN, uses a single internal operation to map the two inputs to one output. Unfortunately, it does not cope well with growing sequence lengths, because the gradient that is used for updating the weights decays and approaches zero, which prevents the model from learning. This is known as the \emph{vanishing gradient} problem \shortcite{hochreiter1998vanishing}. Long short-term memory (LSTM) neural networks \shortcite{hochreiter1997lstm} alleviate this issue by introducing three more operations inside the layer that allow gradient information to flow through the layer unchanged. This makes LSTMs more complex but less prone to the vanishing gradient problem. More recently, \shortciteA{cho2014gru} proposed the Gated Recurrent Unit (GRU), a simpler version of the LSTM with comparable performance.
 
 
 \begin{itemize}[noitemsep]
 	\item See Dang20!
 	\item Note: there aren't really any non-DL ML models out there. Tho: there is a lot of research on ML models, buuut there are no published artifacts. These are mostly dictionaries/DL!
 	\item Recurrent models
+	\item CNNs!
 	\item Transformer models
 	\item LLMs
 	\item pre-processing / text representation (see section \ref{section-data-preprocessing})

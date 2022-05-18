@@ -1,0 +1,55 @@
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+	\tikzstyle{vector_style}=[matrix of nodes,row sep=-\pgflinewidth,nodes={draw,anchor=center,minimum height=0.1em,minimum width=0.1em},column sep=-\pgflinewidth]
+	\tikzstyle{thick-arrow}=[-latex, shorten >=0.2em,line width=0.3mm]
+	
+		
+		% vectors
+		\matrix[vector_style](v1){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of v1](v2){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of v2](v3){\ & \ & \ & \ & \ \\};
+		
+		% words
+		\node[below=1em of v1](w1){\emph{``sell''}};
+		\node[below=1em of v2](w2){\emph{``this''}};
+		\node[below=1em of v3](w3){\emph{`stock''}};
+		
+		% rnns
+		\node[above=2em of v1,draw,minimum width=2.5em, minimum height=2.5em,fill=lightgrey](rnn1){RNN};
+		\node[above=2em of v2,draw,minimum width=2.5em, minimum height=2.5em,fill=lightgrey](rnn2){RNN};
+		\node[above=2em of v3,draw,minimum width=2.5em, minimum height=2.5em,fill=lightgrey](rnn3){RNN};
+		
+				
+		\draw[->](w1) -- (v1);
+		\draw[->](w2) -- (v2);
+		\draw[->](w3) -- (v3);
+		
+		\draw[thick-arrow](v1) -- (rnn1) node[midway,xshift=1em,yshift=-0.4em]{\small$w_0$};
+		\draw[thick-arrow](v2) -- (rnn2) node[midway,xshift=1em,yshift=-0.4em]{\small$w_1$};
+		\draw[thick-arrow](v3) -- (rnn3) node[midway,xshift=1em,yshift=-0.4em]{\small$w_2$};
+		
+		\coordinate[left=2.5em of rnn1](c0);
+		\draw[-latex,line width=0.3mm](rnn1) -- (rnn2) node[midway,yshift=0.5em]{\small$o_0$};
+		\draw[-latex,line width=0.3mm](rnn2) -- (rnn3) node[midway,yshift=0.5em]{\small$o_1$};
+		\draw[-latex,line width=0.3mm, dashed](c0) -- (rnn1);
+		
+		
+		\matrix[vector_style, right=2em of rnn3](hiddenstate){\ \\ \ \\ \ \\};
+		
+		\draw[-latex,line width=0.3mm](rnn3) -- (hiddenstate);
+		
+		% legend
+		\node[anchor=east,left=1.75em of c0,darkgrey](lrnn){RNN};
+		\node[anchor=east,darkgrey] at (v1.east -| lrnn.east){Word Vectors};
+		\node[anchor=east,darkgrey] at (w1.east -| lrnn.east) {Text};
+		\node[darkgrey, right=0.75em of hiddenstate] {Hidden State};
+		
+		\node[above=0.5em of rnn1]{\small$t=0$};
+		\node[above=0.5em of rnn2]{\small$t=1$};
+		\node[above=0.5em of rnn3]{\small$t=2$};		
+		
+	\end{tikzpicture}
+	\caption{Processing text with an RNN}
+	\label{figure-rnn}
+\end{figure}
