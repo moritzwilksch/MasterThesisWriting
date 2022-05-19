@@ -1,0 +1,55 @@
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+	\tikzstyle{vector_style}=[matrix of nodes,row sep=-\pgflinewidth,nodes={draw,anchor=center,minimum height=0.1em,minimum width=0.1em},column sep=-\pgflinewidth]
+	\tikzstyle{thick-arrow}=[-latex, shorten >=0.2em,line width=0.3mm]
+	
+		
+		% vectors
+		\matrix[vector_style](v1){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style, below=0em of v1](v2){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style, below=0em of v2](v3){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style, below=0em of v3](v4){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style, below=0em of v4](v5){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style, below=0em of v5](v6){\ & \ & \ & \ & \ \\};
+				
+		% words
+		\node[left=3em of v1](w1){\emph{``hello''}};
+		\node[left=3em of v2](w2){\emph{``this''}};
+		\node[left=3em of v3](w3){\emph{``is''}};
+		\node[left=3em of v4](w4){\emph{``a''}};
+		\node[left=3em of v5](w5){\emph{``short''}};
+		\node[left=3em of v6](w6){\emph{``example''}};		
+				
+		% arrows	
+		\draw[->,shorten >=0.2em](w1) -- (v1);
+		\draw[->,shorten >=0.2em](w2) -- (v2);
+		\draw[->,shorten >=0.2em](w3) -- (v3);
+		\draw[->,shorten >=0.2em](w4) -- (v4);
+		\draw[->,shorten >=0.2em](w5) -- (v5);
+		\draw[->,shorten >=0.2em](w6) -- (v6);
+		
+		% window
+		\node[draw=blue, fit=(v2)(v3)(v4),inner sep=-0.5mm,line width=1pt,outer sep=0pt,xshift=-0.25mm](window){};
+		\node[draw=red, fit=(v4)(v5)(v6),inner sep=-0.5mm,line width=1pt,outer sep=0pt,xshift=0.25mm](window2){};
+%		\node[right=0em of window]{\small$w=3$};
+		
+		% result
+		\matrix[vector_style, right=5.5em of v3,yshift=-1mm,outer sep=0pt](res){\ \\ \ \\ \ \\ \ \\};
+		
+		% guide lines
+		\draw[-, dotted,line width=1pt,blue](window.north east) -- (res-2-1.north west);
+		\draw[-, dotted,line width=1pt,blue](window.south east) -- (res-2-1.south west);
+		
+		\draw[-, dotted,line width=1pt,red](window2.north east) -- (res-4-1.north west);
+		\draw[-, dotted,line width=1pt,red](window2.south east) -- (res-4-1.south west);
+		
+		% labels
+		\node[grey, above=1em of w1]{Words};
+		\node[grey, above=1em of v1]{Word Vectors};
+		\node[grey, above=1em of res]{Representation};
+						
+	\end{tikzpicture}
+	\caption{Processing text with a CNN with window size $w=3$ at step 2 (blue) and step 4 (red)}
+	\label{figure-cnn}
+\end{figure}

@@ -96,10 +96,14 @@ Once words are represented in the form of numeric word embeddings, they can be u
 
 There are various different types of RNN layers which determine how output $o_t$ is calculated based on inputs $w_t$ and $o_{t-1}$. The simplest one, a vanilla RNN, uses a single internal operation to map the two inputs to one output. Unfortunately, it does not cope well with growing sequence lengths, because the gradient that is used for updating the weights during training decays and approaches zero, which prevents the model from learning. This is known as the \emph{vanishing gradient} problem \shortcite{hochreiter1998vanishing}. Long short-term memory (LSTM) neural networks \shortcite{hochreiter1997lstm} alleviate this issue by introducing three more operations inside the layer that allow gradient information to flow through the layer unchanged. This makes LSTMs more complex but less prone to the vanishing gradient problem. More recently, \shortciteA{cho2014gru} proposed the Gated Recurrent Unit (GRU), a simpler version of the LSTM with comparable performance.
 
+Apart from RNNs, NLP researchers have experimented with adapting techniques from the field of computer vision. Most of the computer vision research is based on convolutional neural networks (CNNs). Invented by \shortciteA{lecun1999object}, they address one of the main challenges of working with image data, which is working on data with spatial structure. Within an image, pixel location is a crutial piece of information. Therefore, CNNs use sliding windows that are moved across an image pixel by pixel and calculate abstract features based on every iteration. This enables them to learn spacial relationships. The same idea has been applied to text data. Once a piece of text is represented as a sequence of word embeddings, a one-dimensional CNN can slide a window of size $w$ over the sequence. At each step, the network can process the $w$ words inside that window, thereby retaining the local spatial relationship. Figure \ref{figure-cnn} demonstrates two steps of this process at two intermediate steps.
+
+\input{assets/tikz_figures/cnn.tex}
+
+\shortciteA{zhang2015sensitivity} show that the CNN architecture can perform well when trained for sentence classification on GloVe word vectors. \shortciteA{sohangir2018bigdata} bechmark multiple DL models on the task of classifying StockTwits sentiment and even find CNNs to outperform other sequence models like LSTMs. Between 2016 and 2018, many studies that utilize DL for SA experimented with CNNs \shortcite{dang2020sentiment}. \textcolor{blue}{Since 2019, they have been mostly replaced with transformers}.
+
 
 \begin{itemize}[noitemsep]
-	\item See Dang20!
-	\item CNNs!
 	\item Transformer models
 	\item pre-processing / text representation (see section \ref{section-data-preprocessing})
 	\item $\rightarrow$ just mention technicalities here briefly, cover tech deets in methodology??
