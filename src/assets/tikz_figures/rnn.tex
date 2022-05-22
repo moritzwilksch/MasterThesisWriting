@@ -25,13 +25,13 @@
 		\draw[->](w2) -- (v2);
 		\draw[->](w3) -- (v3);
 		
-		\draw[thick-arrow](v1) -- (rnn1) node[midway,xshift=1em,yshift=-0.4em]{\small$w_0$};
-		\draw[thick-arrow](v2) -- (rnn2) node[midway,xshift=1em,yshift=-0.4em]{\small$w_1$};
-		\draw[thick-arrow](v3) -- (rnn3) node[midway,xshift=1em,yshift=-0.4em]{\small$w_2$};
+		\draw[thick-arrow](v1) -- (rnn1) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_0$};
+		\draw[thick-arrow](v2) -- (rnn2) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_1$};
+		\draw[thick-arrow](v3) -- (rnn3) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_2$};
 		
 		\coordinate[left=2.5em of rnn1](c0);
-		\draw[-latex,line width=0.3mm](rnn1) -- (rnn2) node[midway,yshift=0.5em]{\small$o_0$};
-		\draw[-latex,line width=0.3mm](rnn2) -- (rnn3) node[midway,yshift=0.5em]{\small$o_1$};
+		\draw[-latex,line width=0.3mm](rnn1) -- (rnn2) node[midway,yshift=0.5em]{\small$\bm{o}_0$};
+		\draw[-latex,line width=0.3mm](rnn2) -- (rnn3) node[midway,yshift=0.5em]{\small$\bm{o}_1$};
 		\draw[-latex,line width=0.3mm, dashed](c0) -- (rnn1);
 		
 		

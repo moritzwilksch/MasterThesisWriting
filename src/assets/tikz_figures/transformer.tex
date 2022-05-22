@@ -1,0 +1,57 @@
+\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}
+	\tikzstyle{vector_style}=[matrix of nodes,row sep=-\pgflinewidth,nodes={draw,anchor=center,minimum height=0.1em,minimum width=0.1em},column sep=-\pgflinewidth]
+	\tikzstyle{thick-arrow}=[-latex, shorten >=0.2em,line width=0.3mm]
+	
+		
+		% vectors
+		\matrix[vector_style](v1){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of v1](v2){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of v2](v3){\ & \ & \ & \ & \ \\};
+		% out
+		\matrix[vector_style,above=6em of v1](vo1){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of vo1](vo2){\ & \ & \ & \ & \ \\};
+		\matrix[vector_style,right=2em of vo2](vo3){\ & \ & \ & \ & \ \\};
+		
+		% words
+		\node[below=1em of v1](w1){\emph{``sell''}};
+		\node[below=1em of v2](w2){\emph{``this''}};
+		\node[below=1em of v3](w3){\emph{``stock''}};
+		
+		% rnns
+		\node[above=2em of v2,draw,minimum width=2.5em, minimum height=1.5em,fill=lightgrey,minimum width=5cm](transformer){Transformer Block};
+		
+				
+		\draw[->](w1) -- (v1);
+		\draw[->](w2) -- (v2);
+		\draw[->](w3) -- (v3);
+		
+		\draw[thick-arrow](v1) -- ++(0, 1) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_0$};
+		\draw[thick-arrow](v2) -- ++(0, 1) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_1$};
+		\draw[thick-arrow](v3) -- ++(0, 1) node[midway,xshift=1em,yshift=-0.4em]{\small$\bm{w}_2$};
+		% out
+		\draw[thick-arrow,latex-](vo1) -- ++(0, -1) node[midway,xshift=1em,yshift=0em]{\small$\bm{v}_0$};
+		\draw[thick-arrow,latex-](vo2) -- ++(0, -1) node[midway,xshift=1em,yshift=0em]{\small$\bm{v}_1$};
+		\draw[thick-arrow,latex-](vo3) -- ++(0, -1) node[midway,xshift=1em,yshift=0em]{\small$\bm{v}_2$};
+		
+
+		% legend
+		\node[anchor=east,left=3em of transformer,darkgrey](lrnn){Transformer};
+		\node[anchor=east,darkgrey] at (v1.east -| lrnn.east){Word Vectors};
+		\node[anchor=east,darkgrey] at (w1.east -| lrnn.east) {Words};
+		\node[anchor=east,darkgrey] at (vo1.east -| lrnn.east) {Reweighted Vectors};
+
+						
+		\matrix[vector_style, right=2em of vo3](result){\ \\ \ \\ \ \\ \ \\ \ \\};
+		\draw[-latex,line width=0.3mm,dotted](vo1) -- (vo2);
+		\draw[-latex,line width=0.3mm,dotted](vo2) -- (vo3);
+		\draw[-latex,line width=0.3mm,dotted](vo3) -- (result);
+		
+		\node[below=0em of result]{$\bar{\bm{v}}$};
+		\node[darkgrey,right=0.5em of result,text width=6em,yshift=-1em]{Representation\\\vspace{-2em}$$\bar{\bm{v}}=\frac{1}{n}\sum_{i=0}^{n} \bm{v}_i$$};
+		
+	\end{tikzpicture}
+	\caption{Processing text with a transformer model}
+	\label{figure-transformer}
+\end{figure}
