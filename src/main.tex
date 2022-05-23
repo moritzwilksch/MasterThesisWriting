@@ -16,6 +16,7 @@
 %\spacing{1.2}
 \setstretch{1.25}
 \setcounter{secnumdepth}{3}  % max. heading depth
+\usepackage[colorlinks=true]{hyperref}  % Links in TOC and \refs
 \usepackage[titletoc]{appendix}
 \usepackage{varwidth}
 \usepackage{makecell} % linebreaks in tables
@@ -24,7 +25,6 @@
 % MISC Packages
 \usepackage{booktabs}  % table rules
 \usepackage{tabularx}
-\usepackage{hyperref}  % Links in TOC and \refs
 \usepackage{apacite}
 \usepackage{xcolor} % Must import BEFORE tcolorbox
 \usepackage{tcolorbox}
@@ -44,8 +44,16 @@
 \cfoot{\thepage}
 
 % MISC COMMANDS
-\hypersetup{linktocpage, pdfborder = {0 0 0}} % Links
-\hypersetup{bookmarks=true, bookmarksnumbered=true} % Links in TOC
+%\hypersetup{linktocpage, pdfborder = {0 0 0}} % Links
+%\hypersetup{bookmarks=true, bookmarksnumbered=true} % Links in TOC
+\hypersetup{
+	bookmarks=false,
+	bookmarksnumbered=true,
+	linktocpage=true,
+    colorlinks=false,
+    linktoc=all,
+    pdfborder={0 0 0},
+}
 \definecolor{up-blue}{HTML}{00305e}
 \renewcommand{\arraystretch}{0.9}  % line spacing WITHIN TABLES
 \emergencystretch 5em
