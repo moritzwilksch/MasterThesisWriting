@@ -1,0 +1,41 @@
+\begin{figure}[!ht]
+	\centering
+	\small
+	\begin{tikzpicture}
+	
+
+		
+%	% header
+\matrix[matrix of nodes,right=2em of mtx,nodes={minimum width=1em,anchor=south},row sep=0.5em,row 1/.style={nodes={text height=0.5em,align=left,rotate=90,anchor=east,text width=5em}},column sep=-0.12em](mtx) {\textbf{academia} & \textbf{academic} & \textbf{in} & \textbf{research} & 
+\textbf{researcher} \\ 1 & 0 & 1 & 0 & 1 \\ 0 & 1 & 0 & 1 & 0\\};
+
+
+%[' academ', ' in ', ' resear', 'academi', 'ademia ', 'ademic ', 'archer ', 'cademia', 'cademic', 'earcher', 'esearch', 'researc', 'search ', 'searche']
+
+	\matrix[matrix of nodes,right=2em of mtx,nodes={minimum width=1em,anchor=south},row sep=0.5em,row 1/.style={nodes={text height=0.5em,align=left,rotate=90,anchor=east,text width=5em}},column sep=-0.12em](mtx2) {\textbf{academ} & \textbf{in} & \textbf{resear} & \textbf{academi} & \textbf{ademia} & \textbf{ademic} & \textbf{archer} & \textbf{cademia} & \textbf{cademic} & \textbf{earcher} & \textbf{esearch} & \textbf{researc} & \textbf{search} & \textbf{searche} \\1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1\\ 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0\\};
+	
+		% txt
+	\node[text width=12em,align=center,left=3em of mtx-2-1](txt1){\emph{``researcher in academia''}};
+	\node[left=3em of mtx-3-1,text width=9em,align=center](txt2) {\emph{``academic research''}};
+
+\draw[->, shorten >= 0.5em](txt1) -- (mtx-2-1);
+\draw[->, shorten >= 0.5em](txt2) -- (mtx-3-1);
+
+%\node[above=0.5em of mtx-1-3](w){Words};
+%\node at (w -| txt1) {Texts};
+
+
+	\node[draw,fit=(mtx-2-1)(mtx-3-5),inner sep=-0.1em,dashed](border){};
+	\node[draw,fit=(mtx2-2-1)(mtx2-3-14),inner sep=-0.1em,dashed](border2){};
+
+	\node[below=2em of border](sc){$S_c(\bm{v}_1, \bm{v}_2)=0$};
+	\node[below=2em of border2](sc2){$S_c(\bm{v}_1, \bm{v}_2)=0.533$};
+	
+	\draw[->](border)--(sc);
+	\draw[->](border2)--(sc2);
+	
+	\end{tikzpicture}
+	\caption{The difference between word- and sub-word-based BoW representation}
+	\label{figure-word-subword}
+\end{figure}
+
