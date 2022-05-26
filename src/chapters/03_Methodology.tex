@@ -10,10 +10,19 @@ English-speaking users who discuss finance and investing on online social media 
 	\item By using Twitter data for our experiments we can answer RQ4 and compare performances between models and data sources.
 \end{enumerate}
 
-
+A disadvantage of the Twitter platform is that -- unlike StockTwits -- the majority of tweets are not related to finance and investing. As a remedy, we utilize cashtags for searching investment-related posts on Twitter. These tags are only used when referring to publicly traded companies as financial entities, as each cashtag contains the company's stock ticker symbol. This mostly prevents generic tweets about a company's brand or products from spilling into the collected data and allows us to focus the artifact design process on financial social media posts.
 
 % -----------------------------------------------------------------------
 \subsubsection{Sampling}
+
+The first step to collecting data on Twitter is assembling a search query because the Twitter search application programming interface (API) requires users to search for specific cashtags instead of any Tweet containing cashtags.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{assets/images/tweet_counts.pdf}
+	\caption{Number of average Tweets per day in April 2022 for the top 20 tickers}
+\end{figure}
+
+The top 20 tickers (out of 505) produced 53.7\% of all tweets, top 56 produced 70.9\%
 \begin{itemize}[noitemsep]
 	\item Twitter: convenience sampling of last $7d$
 \end{itemize}
