@@ -15,11 +15,12 @@ A disadvantage of the Twitter platform is that -- unlike StockTwits -- the major
 % -----------------------------------------------------------------------
 \subsubsection{Sampling}
 
-The first step to collecting data on Twitter is assembling a search query because the Twitter search application programming interface (API) requires users to search for specific cashtags instead of any Tweet containing cashtags.
+The first step to collecting data on Twitter is assembling a search query because the Twitter search application programming interface (API) requires users to search for specific cashtags instead of any Tweet containing cashtags. To make results comparable to the previous literature we will focus on English posts only. Therefore, as a starting point for selecting ticker symbols to include in the search query, we use the S\&P500 index. From there, we impose a minimum activity filter on each stock ticker: a ticker is only considered to be actively discussed on Twitter if there are more than 100 tweets per day on average mentioning it. Without such a filter, there is a risk of few Twitter users representing the ``public'' sentiment of a company. To conduct the filtering, we collect data on the number of tweets per day for every S\&P500 ticker during April of 2022. As Figure \ref{figure-tweet-activity} demonstrates, the distribution of activity is highly skewed. The top 20 tickers account for 53.7\% of all tweets about S\&P500 companies. 56 tickers fulfill the minimum activity constraint and account for 70.9\% of tweet volume. Out of these 56, we manually exclude 6 tickers (\texttt{AME, OGN, TEL, AMP, KEY, STX}) because while they represent corporations listed in the S\&P500 index, they are mostly used to reference cryptocurrencies on Twitter. This is problematic as the domain of cryptocurrencies is fundamentally different from the equity market. Financial instruments like options do not exist for cryptocurrencies and they are also not affected by any kind of fundamental information. Thus, we decide to remove them from the data set and focus on publicly traded companies.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{assets/images/tweet_counts.pdf}
 	\caption{Number of average Tweets per day in April 2022 for the top 20 tickers}
+	\label{figure-tweet-activity}
 \end{figure}
 
 The top 20 tickers (out of 505) produced 53.7\% of all tweets, top 56 produced 70.9\%
@@ -34,8 +35,7 @@ The top 20 tickers (out of 505) produced 53.7\% of all tweets, top 56 produced 7
 % -----------------------------------------------------------------------
 \subsubsection{Task Definition}
 \begin{itemize}[noitemsep]
-	\item why pos/neg/neu?
-	\item codebook: UoA = document! Locking in profit = positive, even if that means selling a stock. This here is not aspect(i.e. stock)-based, but text sentiment in a tweet
+	\item Difference Market Sentiment vs. Writer Sentiment (see FinSoMe, chen et al):
 \end{itemize}
 
 \input{assets/tables/static/codebook.tex}
@@ -86,6 +86,8 @@ The top 20 tickers (out of 505) produced 53.7\% of all tweets, top 56 produced 7
 	\item metrics
 \end{itemize}
 
+
+\input{assets/tikz_figures/cv.tex}
 
 
 % -----------------------------------------------------------------------
