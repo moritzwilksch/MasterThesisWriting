@@ -25,8 +25,6 @@ The first step to collecting data on Twitter is assembling a search query becaus
 
 The final API query is displayed in Figure \ref{figure-api-query}. The search retrieves all tweets mentioning any of the 50 tickers. Additionally, five options make the query 1) only retrieve English tweets, 2) exclude retweets because they do not contain original text, 3) exclude advertisements, 4) exclude tweets with images, and 5) exclude tweets with attached videos. We choose to exclude tweets with attached images or videos because we cannot analyze the information in the attached media. While most attachments are non-informative memes anyways, some include screenshots of stock charts or trading setups. Such images contain valuable information, but extracting it is beyond the scope of this work, which focuses on NLP.
 
-Using the final search query, we collect all tweets using the Twitter API v2's endpoint \texttt{/2/tweets/search/all}. We query all tweets posted after April 1, 2021 (00:00:00 UTC) and before May 1, 2022 (00:00:00 UTC). By collecting a little more than one full year's worth of tweets we cover one full business cycle and prevent the collected data from being biased towards a small window of time, for example, earnings season. However, we have to acknowledge that market conditions and consequently Twitter discussions change over time. Therefore, the data sample from 2021/2022 might lose relevance in the long term.
-
 \begin{figure}[!ht]
 	\begin{tcolorbox}
 	\small
@@ -37,28 +35,40 @@ Using the final search query, we collect all tweets using the Twitter API v2's e
 	\label{figure-api-query}
 \end{figure}
 
-The presented query yields XXX TBD results...
+Using the final search query, we collect all tweets using the Twitter API v2's endpoint \texttt{/2/tweets/search/all}. We query all tweets posted after April 1, 2021 (00:00:00 UTC) and before May 1, 2022 (00:00:00 UTC). The presented query yields $3,757,384$ raw results which are saved and will undergo further filtering and preprocessing as described in Section \ref{section-dataquality}. 
+ By collecting a little more than one full year's worth of tweets we cover one full business cycle and prevent the collected data from being biased towards a small window of time, for example, earnings season. However, we have to acknowledge that market conditions and consequently Twitter discussions change over time. Therefore, the data sample from 2021/2022 might lose relevance in the long term.
+
 
 % =======================================================================
 \subsection{Data Labelling}
 
 % -----------------------------------------------------------------------
-\subsubsection{Task Definition}
-\begin{itemize}[noitemsep]
-	\item Difference Market Sentiment vs. Writer Sentiment (see FinSoMe, chen et al):
-\end{itemize}
+\subsubsection{Data Quality Assessment}
+\label{section-dataquality}
+Due to resource constraints, it is infeasible to label all of the collected data. Hence, we will randomly sample $10,000$ data points which will be manually annotated. To allocate the labeling resources efficiently we clean the entire dataset before selecting the subsample to be labeled. This ensures that time invested in labeling is not wasted by removing large amounts of spam posts that could have been removed automatically.
 
-\input{assets/tables/static/codebook.tex}
-
-
-% -----------------------------------------------------------------------
-\subsubsection{Data Quality Assessment}  % TODO: wording
 \begin{itemize}[noitemsep]
 	\item de-dupe
 	\item length/cashtag filter
-	\item potentially: spam classifier model?
 	\item mention: no active learning (\url{https://blog.fastforwardlabs.com/2019/04/02/a-guide-to-learning-with-limited-labeled-data.html})
 \end{itemize}
+
+
+
+
+% -----------------------------------------------------------------------
+\subsubsection{Task Definition}
+Before labeling a subset of the collected data we need to clearly define the labeling task. This entails defining the dependent variable and laying out clear definitions for each category such that the assignment of documents to each category is as clear as possible. The dependent variable we study in this work is market sentiment. \citeA{chen2020finsome} make an important distinction between market sentiment and general author sentiment. For example, consider the sentence ``Nice, I already made a lot of money this morning and just shorted \$AAPL, this is gonna be great!''. The author's sentiment in this document is positive as they mention previous successful trades and a great future. However, the market sentiment in this sentence is negative. The author opened a short position in Apple Inc. (cashtag \$AAPL) which only yields a positive return if the stock price of Apple declines. The author, therefore, expects a decline in the market value of Apple shares which we consider a negative market sentiment. We choose to model market sentiment instead of author sentiment for the following two reasons. First, market sentiment information is more valuable for most downstream analysis tasks as it represents retail investors' anticipation of future events, not just their current general sentiment which does not need to correlate with equity markets \cite{chen2020finsome}. For example, an investor expecting a stock market crash might be happy about selling all their positions in time in which case the market sentiment (negative) and the general text sentiment (positive) might oppose one another.
+ Second, the research gap outlined in Section \ref{section-research-gap} is most prevalent for the domain-specific task of market sentiment analysis as generic models like VADER \cite{hutto2014vader} or Twitter RoBERTa \cite{barbieri2020tweeteval} can be used to detect general author sentiment.
+ \textcolor{red}{Add 3rd point: 3-class maps nicely to bullish/bearish/neutral}
+
+For the data annotation task, we decide to classify documents into four categories: bullish, bearish, uncertain, and no sentiment. While this labeling scheme is different from the more common three-class approach it can account for the difference between tweets with uncertain sentiment and tweets with no sentiment. A \emph{no sentiment} category is needed because not every document contains sentimental expressions. Thus, a two-class approach that classifies documents as either positive or negative is too simplistic to be applied to real-world data. In addition to the neutral label, we add a fourth category (\emph{uncertain}) to our labeling task because for document-level analysis it is unclear to which category a tweet containing both positive \emph{and} negative sentiment belongs. The new category can capture texts like ``I like stock A but dislike stock B''. It is important to reiterate that this category does not mean that the \emph{labeler} is uncertain about what category is correct, but rather that the post contains both positive and negative aspects.
+ The disadvantage of this approach is that we need a translation scheme between the labeled data obtained in this work and the more common three-class approach used by previous literature to compare model performances on different datasets. For now, we suggest that the two categories \emph{uncertain} and \emph{no sentiment} can be merged into what other research refers to as \emph{neutral}. \textcolor{red}{We will adopt this approach in the modeling phase to ensure that results obtained in this work are easily comparable to previous studies}.
+ Finally, Table \ref{table-codebook} presents the detailed definitions according to which the data were labeled.
+
+
+
+\input{assets/tables/static/codebook.tex}
 
 
 
@@ -67,16 +77,10 @@ The presented query yields XXX TBD results...
 \subsection{Data Preprocessing}
 \label{section-data-preprocessing}
 % -----------------------------------------------------------------------
-\subsubsection{Tokenization}
+\subsubsection{Tokenization and Representation of Text Data}
 \begin{itemize}[noitemsep]
 	\item tokenization
-\end{itemize}
-
-% -----------------------------------------------------------------------
-\subsubsection{Representation of Text Data}
-\begin{itemize}[noitemsep]
-	\item vectorizer (TF-IDF?)
-	\item Embeddings?
+	\item word embeddings
 \end{itemize}
 
 
