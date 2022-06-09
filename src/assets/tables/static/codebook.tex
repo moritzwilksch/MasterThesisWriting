@@ -1,5 +1,5 @@
-
 \begin{table}[!ht]
+%\begin{longtable}{p{7.5cm}p{7.5cm}}
 \centering
 \small
 \begin{tabular}{p{7.5cm}p{7.5cm}}
@@ -27,12 +27,20 @@
  	\item insulting, mocking, or using stock as a negative example
  	\item asking rhetorical questions suggesting negative sentiment 
 	\item disliking, banning, avoiding, or stop using a company's products \& services
-
 \end{itemize}\\
+
+% Attention, split table into two!
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{p{7.5cm}p{7.5cm}}
+
 \toprule
 \multicolumn{1}{c}{\textbf{Uncertain}} & \multicolumn{1}{c}{\textbf{No Sentiment}} \\
 \midrule
-
 \begin{itemize}[noitemsep,leftmargin=*,topsep=-12pt]
 	\item not investing for uncertain expectations
 	\item list pro \emph{and} con arguments for investment
