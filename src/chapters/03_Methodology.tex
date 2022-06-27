@@ -60,7 +60,7 @@ Before labeling a subset of the collected data we need to clearly define the lab
  \textcolor{red}{Add 3rd point: 3-class maps nicely to bullish/bearish/neutral}
 
 For the data annotation task, we decide to classify documents into four categories: bullish, bearish, uncertain, and no sentiment. While this labeling scheme is different from the more common three-class approach it can account for the difference between tweets with uncertain sentiment and tweets with no sentiment. A \emph{no sentiment} category is needed because not every document contains sentimental expressions. Thus, a two-class approach that classifies documents as either positive or negative is too simplistic to be applied to real-world data. In addition to the neutral label, we add a fourth category (\emph{uncertain}) to our labeling task because for document-level analysis it is unclear to which category a tweet containing both positive \emph{and} negative sentiment belongs. The new category can capture texts like ``I like stock A but dislike stock B''. It is important to reiterate that this category does not mean that the \emph{labeler} is uncertain about what category is correct, but rather that the post contains both positive and negative aspects.
- The disadvantage of this approach is that we need a translation scheme between the labeled data obtained in this work and the more common three-class approach used by previous literature to compare model performances on different datasets. For now, we suggest that the two categories \emph{uncertain} and \emph{no sentiment} can be merged into what other research refers to as \emph{neutral}. \textcolor{red}{We will adopt this approach in the modeling phase to ensure that results obtained in this work are easily comparable to previous studies}.
+ The disadvantage of this approach is that we need a translation scheme between the labeled data obtained in this work and the more common three-class approach used by previous literature to compare model performances on different datasets. For now, we suggest that the two categories \emph{uncertain} and \emph{no sentiment} can be merged into what other research refers to as \emph{neutral}. We will adopt this approach in the modeling phase to ensure that results obtained in this work are easily comparable to previous studies. Subsequently, we will further assess the differences between the two categories after modeling.
  Finally, Table \ref{table-codebook} presents the detailed definitions according to which the data were labeled.
 
 
@@ -75,12 +75,33 @@ For the data annotation task, we decide to classify documents into four categori
 \label{section-data-preprocessing}
 % -----------------------------------------------------------------------
 \subsubsection{Tokenization and Representation of Text Data}
-\begin{itemize}[noitemsep]
-	\item tokenization
-	\item word embeddings
-\end{itemize}
+The text data needs to be pre-processed and tokenized before being fed to any statistical model. To facilitate the learning of generalizable patterns, we apply the following preprocessing steps to the data before splitting it into tokens.
+\begin{enumerate}[noitemsep]
+	\item replace HTML-encoded special characters, for example ``\&lt;'' by ``<''
+	\item replace all digits with the digit ``9''
+	\item replace all cashtags with the placeholder ``ticker''
+	\item replace all user mentions with the placeholder ``@user''
+	\item convert the text to lower case
+\end{enumerate}
 
+The data returned by the Twitter API contains HTML encoded special characters. To simplify the each document's text, we replace the encoded character by its actual representation. Next, we replace all digits by the digit ``9''. Because numbers mentioned in tweets are often unique, a model can memorize them to classify a document correctly. However, this process makes the model overfit to the training data as the memorized numbers need not occur in future tweets and are not indicative of market sentiment. By replacing all digits, we retain the meaning of a number but reduce overfitting. For example, ``99/99/9999'' still represents a date, ``\$999'' a price, and ``+9.9\%'' a relative increase in price. These generalizable concepts make models less prone to overfitting and improve their performance on unseen data. The same logic applies to cashtags and usernames mentioned in a tweet. They should not influence a tweet's market sentiment, hence we replace them with placeholders to facilitate generalization. For usernames, this also guarantees Twitter users' privacy and makes the model's predictions invariant with respect to the mentioned ticker or user. We do not remove stop words or stem the words in a document as these methods have been shown to reduce predictive accuracy on the task of sentiment analysis \shortcite{renault2020sentiment}. \shortciteA{renault2020sentiment} does find, however, that preserving emojis during preprocessing is the single most important preprocessing step. Hence, we make sure that unicode emojis as well as emojis based on punctuation are not altered during the data preparation.
 
+After preprocessing the text it still needs to be tokenized and transformed to each model's required input representation. For the machine learning models we train this representation is a BoW matrix. The BoW matrix can be created in three different ways: Its entries can represent a binary indicator of whether a token is present in a document, the number of occurrences of a token in a document, or the ``term frequency-inverse document-frequency'' (TF-IDF) score of a token. For this work, we choose to create BoW representations based on the TF-IDF score as previous research suggest that ML models perform better on TF-IDF representations than they do on raw counts \shortcite{pimpalkar2020influence}.
+The TF-IDF score of a term $t$ and document $d$ is defined as
+\begin{equation}
+	\textrm{tfidf}(t, d) = \textrm{tf}(t, d) \times \textrm{idf}(t)
+\end{equation}
+where the term frequency is defined as the raw frequency of term $t$ in document $d$
+\begin{equation}
+	 \textrm{tf}(t, d) = f_{t,d}
+\end{equation}
+and the inverse document frequency is defined as
+\begin{equation}
+	\textrm{idf}(t) = \log \frac{1+n}{1+\textrm{df}(t)} + 1
+\end{equation}
+where $n$ is the total number of documents and \textrm{df} is the number of documents that contain term $t$. 
+
+While representing data as a BoW matrix does not account for the order of the tokens, DL models can process sequential data. In theory, that makes them superior for NLP applications as the order of words in natural language conveys important information. To exploit this characteristic, the data are represented as token IDs. The mapping from tokens to IDs is created based on the corpus of text. We utilize a sub-word tokenization technique called ``byte pair encoding'' \shortcite{sennrich2015neural}. For a given vocabulary size, byte pair encoding starts by splitting a text into its characters. Next, the most frequently occurring character combinations are merged together. This yields a vocabulary that contains full word tokens for frequent words like ``the'' but is still flexible because it is sub-word based for infrequent combinations. For example, the infrequently occurring name ``Melfordshire'' might be split into the tokens ``mel'', ``ford'', and ``shire''. The suffix ``shire'' is a strong indication that the word refers to a name of a town or city, a pattern that statistical models can learn. This technique combines the advantages of word- and sub-word tokenization. For our experiments, we create a vocabulary of size 3,000 on the training corpus and use it to map tokens to IDs which are fed to the DL models. Based on them, the models learn word embeddings which semantically represent the tokens (see Section \ref{section-text-repr-theory}).
 
 
 
@@ -92,20 +113,17 @@ For the data annotation task, we decide to classify documents into four categori
 
 % -----------------------------------------------------------------------
 \subsubsection{Performance Evaluation}
-\begin{itemize}[noitemsep]
-	\item cross validation
-	\item metrics
-\end{itemize}
-
+Training a model, tuning its hyperparameters, and assessing its out-of-sample performance requires the use of three non-overlapping datasets. Typically, an existing dataset is split into three folds, one for training, validation, and testing. The training data cannot be used for hyperparameter selection or performance assessment as the estimates would be biased and encourage memorization. The validation set is used for selecting the optimal hyperparameters but therefore cannot be used for true out-of-sample performance assessment as choosing the optimal parameter on the validation set positively biases the performance estimate.\newline
+For assessing model performance in this work, we use nested cross-validation. Considering the small dataset size of $n=10,000$, a simple three-fold split would force us to evaluate model performance on a small subset of the data (1,500 data points if 15\% of the data are chosen for testing). Instead, we split the data as demonstrated in Figure \ref{figure-cv-split}. An outer cross-validation loop splits the dataset into five folds. At each split $s_i$, one of the five folds is chosen as the test set $t_i$. The remaining four folds (80\% of the dataset) are used for training and validation which is conducted by another inner cross-validation loop. The inner cross-validation repeats the procedure and splits the remaining 80\% of the data into another five folds, one of which is used for hyperparameter selection.\newline
+The nested cross-validation not only yields more reliable performance estimations but also allows us to assess an estimate's variance. However, it requires 25 times more computational power than model fitting on a single three-fold split. Therefore, we cannot use nested cross-validation for training DL models as they already take much longer to train than the ML models. For the DL models, we will stick to holding out 25\% of the dataset as test data and use a single five-fold CV on the rest of the dataset for hyperparameter optimization.
 
 \input{assets/tikz_figures/cv.tex}
 
+Finally, we will compare all models based on their Area Under the Receiver Operating Characteristic Curve (ROC AUC). While we will also report the accuracy, it cannot be used for comparing models across different datasets. If the class distributions between datasets differ, accuracy scores can be misleading and do not represent the actual predictive power of a model. In this case, the ROC AUC still remains representative and hence is the better measure in this case. Moreover, it does not only quantify the number of correctly classified documents but also the models certainty in the prediction. The ROC AUC ranges from zero to one, where $\textrm{AUC}=0.5$ represents random guessing and $\textrm{AUC}=1$ implies perfect predictions.
 
 % -----------------------------------------------------------------------
-\subsubsection{Selection of Models}
-
-
-Models to build:
+\subsubsection{Models and Hyperparameters}
+Based on previous research on SA and common model architectures used in NLP we will train ML and DL models from scratch and fine-tune a large language model on our data. The logistic regression and SVM are the most commonly applied ML models with the advantage that the logistic regression is easily interpretable. For deep learning, we train two types of sequence models on our data: a recurrent neural network and a transformer neural network using a more novel architecture. To compare our modeling results against fine-tuned LLMs like FinBert and TwitterRoBERTa, we also fine tune a BERT-based model on our dataset. Table \ref{table-models-to-build} provides an overview of the models organized by category.
 
 \input{assets/tables/static/models_to_build.tex}
 
@@ -116,8 +134,7 @@ Models to build:
 	\item hyperparameters
 \end{itemize}
 
-% -----------------------------------------------------------------------
-\subsubsection{Hyperparameters/Search Space?}
+
 
 
 \textbf{Finally:} Show a flowchart of everything?
