@@ -1,0 +1,24 @@
+% ################## Table: Parameter Search Space ###################
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{lm{6cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Search Space} \\
+		\midrule
+		\emph{Common Parameters Logistic Regression \& SVM} & \\
+		\cmidrule(r){1-2}
+		$p_0:$ vectorizer\_analyzer & $\{$word, char\_wb$\}$ \\
+		$p_1:$ vectorizer\_ngram\_range & $\{1,2,3\}$ if $p_0=$``word'' else $\{3,4,5,6\}$ \\
+		$p_2:$ vectorizer\_min\_df & $[1e-6, 1]$\\
+		$p_3:$ model\_C & $[1e-5, 100]$ \\
+		\midrule
+		\emph{SVM Parameters} & \\
+		\cmidrule(r){1-2}
+		$p_4:$ model\_kernel & $\{$linear, poly, rbf, sigmoid$\}$ \\
+		$p_5:$ model\_degree & $\{1,2,3,4,5,6\}$ \\
+		\bottomrule
+	\end{tabular}
+	\caption{Search space for hyperparameter optimization of ML models}
+	\label{table-searchspace}
+\end{table}
+% ###############################################################

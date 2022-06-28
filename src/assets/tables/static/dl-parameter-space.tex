@@ -1,0 +1,27 @@
+% ################## Table: Parameter Search Space ###################
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{lm{6cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Search Space} \\
+		\midrule
+		\emph{Common Parameters GRU \& Transformer} & \\
+		\cmidrule(r){1-2}
+		$p_0:$ token\_dropout & $[0, 0.5]$ \\
+		$p_1:$ embedding\_dim & $\{4, 5, \dots, 128\}$ \\
+		$p_2:$ hidden\_dim & $\{8, 9, \dots, 256\}$\\
+		$p_3:$ dropout & $[0, 0.5]$ \\
+		\midrule
+		\emph{GRU Parameters} & \\
+		\cmidrule(r){1-2}
+		$p_4:$ gru\_hidden\_dim & $\{4, 5, \dots, 256\}$ \\
+		\midrule
+		\emph{Transformer Parameters} & \\
+		\cmidrule(r){1-2}
+		$p_5:$ dim\_ff & $\{4, 5, \dots, 256\}$ \\
+		\bottomrule
+	\end{tabular}
+	\caption{Search space for hyperparameter optimization of the DL models trained from scratch}
+	\label{table-dl-searchspace}
+\end{table}
+% ###############################################################
