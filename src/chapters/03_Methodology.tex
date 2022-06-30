@@ -135,14 +135,17 @@ To achieve optimal performance, each model requires tuning of the most important
 The DL models have a different set of hyperparameters we tune. Both the GRU and the Transformer have a set of common parameters. $p_0$ determines the token dropout. It is applied directly to the input such that the model is only presented with $1 - p_0$ of the input tokens. This random removal of tokens can prevent overfitting. $p_1$, the embedding dimensionality, determines the size of each token's embedding vector. A larger embeddings size can capture more information but slows down training. $p_2$ regulates the size of the hidden layer between the GRU/Transformer output and the output layer. $p_3$ is the value for the dropout operation before and after the hidden layer. Additionally, the GRU's hidden state dimensionality is tuned with $p_4$. For the transformer, $p_5$ is the dimensionality of the internal feed-forward layer.
 \input{assets/tables/static/dl-parameter-space.tex}
 
-\begin{itemize}[noitemsep]
-	\item details re: sklearn, torch, optuna, huggingface here
-\end{itemize}
+For fine-tuning the BERT-based model, we use DistilBERT \shortcite{Sanh2019DistilBERTAD} to transform each document to a 768-dimensional vector representation. This vector is passed through a dropout operation, a hidden layer, another dropout operation and finally to the output layer. Therefore, the model only has two hyperparameters: the hidden dimensionality and the dropout rate. Therefore, we use the same search space as for $p_2$ and $p_3$ of the other neural network models.
 
+Using ReLU activations after all hidden layers, we train the models using the AdamW optimizer \shortcite{loshchilov2017decoupled} with a learning rate of 0.001 and batch size of 64 for a maximum of 50 epochs or until the validation loss plateaus for at least ten epochs.
+We utilize the model and vectorizer implementations from scikit-learn \shortcite{scikit-learn} for the ML models and optimize the hyperparameters using optuna \shortcite{optuna_2019}. The neural networks are implemented with pyTorch \shortcite{pytorch}. For fine-tuning the BERT-based model we use the implementation of DistilBERT \shortcite{Sanh2019DistilBERTAD} in the huggingface transformers library \shortcite{wolf2020transformers}. Figure \ref{figure-methodology-flowchart} summarizes the process.
 
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{assets/images/methodology_flowchart.pdf}	
+	\caption{Flow chart of study methodology from data collection to model fitting}
+	\label{figure-methodology-flowchart}
+\end{figure}
 
-
-\textbf{Finally:} Show a flowchart of everything?
 
 
 
