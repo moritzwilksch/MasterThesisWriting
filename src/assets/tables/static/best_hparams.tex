@@ -1,0 +1,29 @@
+\begin{table}[!ht]
+\centering
+\small
+
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{5}{c}{\textbf{Model}} \\
+ \cmidrule(lr){2-6} 
+\textbf{Hyperparameter} & Logistic Regression & SVM & Recurrent NN & Transformer NN & BERT Finetune \\
+\midrule
+
+vectorizer\_analyzer & char\_wb & char\_wb & -- & -- & -- \\
+vectorizer\_ngram\_range & (4, 4) & (4, 4) & -- & -- & -- \\
+vectorizer\_min\_df & 1.02e-06 & 2.87e-05 & -- & -- & -- \\
+model\_C & 1.428 & 1.597 & -- & -- & -- \\
+model\_kernel & -- & rbf & -- & -- & -- \\
+model\_degree & -- & 3 & -- & -- & -- \\
+\midrule
+token\_dropout & -- & -- & 0.498 & 0.439 & -- \\
+embedding\_dim & -- & -- & 54 & 72 & -- \\
+hidden\_dim & -- & -- & 189 & 237 & 238 \\
+dropout & -- & -- & 0.414 & 0.286 & 0.249 \\
+gru\_hidden\_dim & -- & -- & 44 & -- & -- \\
+dim\_ff & -- & -- & -- & 140 & -- \\
+
+\bottomrule
+\end{tabular}
+
+\end{table}

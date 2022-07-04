@@ -7,10 +7,16 @@
 	\item SHAP values / most important words
 \end{itemize}
 
-
+% =======================================================================
+\subsection{Dataset Statistics}
+\begin{itemize}[noitemsep]
+	\item show diffs between datasets
+	\item bad labels in FinSoMe
+	\item build classifier to tell them apart?
+\end{itemize}
 
 % =======================================================================
-\subsection{Performance Evaluation}
+\subsection{Model Performance Evaluation}
 
 \begin{itemize}[noitemsep]
 	\item compare model performances on own data
@@ -20,9 +26,28 @@
 	\item compare inference times
 	\item mention training times
 \end{itemize}
+\subsubsection{Optimal Model Configuration}
+report found hparams.
 
-\subsubsection{On the Twitter Dataset}
-\subsubsection{On the StockTwits Dataset}
+\input{assets/tables/static/best_hparams.tex}
+
+
+
+
+\subsubsection{Performance on the Twitter Dataset}
+Figure \ref{figure-model-performance-twitter} displays each model's out-of-sample ROC AUC when applied to the dataset we collected from Twitter. The dictionary-based VADER and NTUSD-Fin perform worst scoring an AUC of 0.578 and 0.590 respectively. The domain-specific NTUSD-Fin outperforms VADER, but only by a small margin. FinBERT and TwitterRoBERTa, on the other hand, perform significantly better by both achieving an AUC score of 0.695.\newline
+In comparison, all of the proposed models obtain AUC scores of above 0.80. Out of these models, the recurrent neural net performs worst with an AUC of 0.803. It is outperformed by both the fine-tuned BERT model and the transformer-based neural network which score an AUC of 0.814. The two best models are the logistic regression and the SVM model which achieve AUC scores of 0.817 and 0.827 respectively.
+
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{assets/images/model_performance_pyfin.pdf}	
+	\caption{Out-of-sample model performance on the dataset collected from Twitter}
+	\label{figure-model-performance-twitter}
+\end{figure}
+
+
+
+\subsubsection{Performance on the StockTwits Dataset}
 \subsubsection{Inference Times}
 
 
