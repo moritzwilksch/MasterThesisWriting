@@ -36,6 +36,7 @@
 \usepackage{url}
 \usepackage{bm} % bold match symbols
 \usepackage{longtable}
+\usepackage[english]{babel}
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -61,6 +62,7 @@
 
 % =============================================================================
 \begin{document}
+\pagenumbering{Roman}
 % Acronyms, TOC & Style Definitions
 \input{chapters/acronyms.tex}
 \newpage
@@ -69,6 +71,7 @@
 \input{assets/style_definitions.tex}  % custom tcolorbox styles
 
 % -------------- START CONTENT --------------
+\pagenumbering{arabic}
 \input{chapters/01_Introduction.tex}
 \newpage
 \input{chapters/02_TheoreticalBackground.tex}
