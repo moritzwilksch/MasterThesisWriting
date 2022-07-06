@@ -1,12 +1,5 @@
 \section{Results}
 
-
-\begin{itemize}[noitemsep]
-	\item show demos: engineer categories (e.g. simple stock, options, news headline, ...) 
-	\item own models: where do they fail?
-	\item SHAP values / most important words
-\end{itemize}
-
 % =======================================================================
 \subsection{Dataset Statistics}
 Before benchmarking any models on the collected dataset and Fin-SoMe, we assess how similar the datasets are using descriptive statistics. Figure \ref{figure-word-counts} shows the distribution of post lengths measured as the number of words per post. It indicates that tweets tend to be shorter than StockTwits messages on average. However, the distribution of their lengths is right-skewed suggesting that Twitter is occasionally used to share longer posts while StockTwits is not.
@@ -18,7 +11,7 @@ Before benchmarking any models on the collected dataset and Fin-SoMe, we assess 
 	\label{figure-word-counts}
 \end{figure}
 
-The post length is not the only differentiating characteristic: The distribution of class labels also significantly differs between the two datasets. Within Fin-SoMe, more than 70\% of posts are bullish while only 10\% are bearish. While the data from Twitter also contains more positive than negative tweets, the class ratio is more balanced. However, this does not necessarily imply that posts on StockTwits are generally more positive. The Fin-SoMe dataset either uses slightly different label definitions or contains labeling errors. For example, the post \emph{``\$NXT.X December 28th is the key date. Dec 25-28 this is gonna be wild!''} was labeled as ``bullish''. However, no part of the sentence indicates a clear bullish sentiment. The post author could also expect a stock price drop. Given the ambiguous nature of the text, it would fall in the ``Uncertain'' category according to the codebook used in this work.
+The post length is not the only differentiating characteristic: The distribution of class labels also significantly differs between the two datasets. Within Fin-SoMe, more than 70\% of posts are bullish while only 10\% are bearish. While the data from Twitter also contains more positive than negative tweets, the class ratio is more balanced. However, this does not necessarily imply that posts on StockTwits are generally more positive. The Fin-SoMe dataset either uses slightly different label definitions or contains labeling errors. For example, the post \emph{``\$NXT.X December 28th is the key date. Dec 25-28 this is gonna be wild!''} was labeled as ``bullish''. However, no part of the sentence indicates a clear bullish sentiment. The post author could also expect a stock price drop. Given the ambiguous nature of the text, it would be labeled ``Uncertain'' according to the codebook used in this work.
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{assets/images/class_distributions.pdf}
@@ -26,26 +19,13 @@ The post length is not the only differentiating characteristic: The distribution
 	\label{figure-class-distribution}
 \end{figure}
 
-
-\begin{itemize}[noitemsep]
-	\item show diffs between datasets
-	\item bad labels in FinSoMe
-	\item build classifier to tell them apart?
-\end{itemize}
+Finally, the vocabulary used in the posts on the two platforms is not identical. The relative frequency of words like ``Elon'', ``chatroom'', ``inflation'', and ``factory'' is between 20 and 50 times higher in the Twitter dataset than it is in the posts from StockTwits. On the other hand, the words ``blackberry'', ``silver'', ``vix'', and ``senate'' are 12 to 25 times more prevalent in StockTwits posts than in tweets. The divergence between the two sets of vocabulary can be explained by platform-specific and temporal differences. Users on Twitter are more prone to interacting with one another, for example by commenting. Additionally, the Fin-SoMe dataset was collected in or before 2020 putting more than two years of time between the posts in both data sets.
 
 % =======================================================================
 \subsection{Model Performance Evaluation}
 
-\begin{itemize}[noitemsep]
-	\item compare model performances on own data
-	\item compare model performances on finsome
-	\item compare model performances on semEval
-	\item financial phrase bank??
-	\item compare inference times
-	\item mention training times
-\end{itemize}
-
 \subsubsection{Optimal Model Configuration}
+All subsequently reported results will be based on the optimal model configuration that is found during hyperparameter optimization.
 The optimal hyperparameter configuration for each model is presented in Table \ref{table-optimal-hparams}. The chosen hyperparameters suggest that for the ML models subword tokenization outperforms words-based tokenization using character n-grams of size 4. Another notable pattern is the DL models' need for high token dropouts. Both the recurrent neural net and the transformer-based neural net generalize best when 40 - 50\% of the input tokens are dropped. Additionally, the optimal embedding dimensionality is relatively low. A possible cause for this is that complex DL models require stronger regularization to not overfit smaller datasets.
 
 \input{assets/tables/static/best_hparams.tex}
@@ -67,11 +47,43 @@ In comparison, all of the proposed models obtain AUC scores above 0.80. Out of t
 
 
 \subsubsection{Performance on the StockTwits Dataset}
+To answer RQ4, we apply all models to the StockTwits posts compiled in the Fin-SoMe dataset. The corresponding model performances are dispalyed in Figure \ref{figure-model-performance-stocktwits}. The existing models' performance hardly changes compared to the ROC AUC on the tweet dataset. VADER now scores a slightly higher AUC of 0.590 while NTUSD-Fin achieves a score of 0.599. TwitterRoBERTa and FinBERT achieve AUC values of 0.705 and 0.710 respectively. On the other hand, all of the proposed models perform significantly worse on Fin-SoMe. The fine-tuned BERT model only scores an AUC of 0.702 while the transformer-based and recurrent neural network reach AUC scores of 0.707 and 0.709 respectively. The two ML models still perform best by obtaining an AUC of 0.727. Despite the relative performance decrease when applied to data from a different source, the proposed ML models still manage to outperform the existing BERT-based models.
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{assets/images/model_performance_finsome.pdf}	
+	\caption{Out-of-sample model performance on Fin-SoMe}
+	\label{figure-model-performance-stocktwits}
+\end{figure}
+
+
+
 \subsubsection{Inference Times}
+In times where state-of-the-art language models like GPT-3 require millions of dollars in compute budget for training \cite{gpt3-cost}, it is important to assess the resourcefulness of machine learning models. Therefore, we quantify each models inference speed. Slower models require more compute time which, in a business setting, requires a larger compute budget. Figure \ref{figure-model-inference-times} presents the inference time per sample. Note that the y-axis is log-scaled due to the multiple orders of magnitude that lie between the fastest and the slowest model's speed. All experiments were conducted on a system with an AMD Ryzen 5 3600 CPU and 64GB of RAM.
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{assets/images/model_inference_time.pdf}	
+	\caption{Inference time per sample (ms, log-scaled)}
+	\label{figure-model-inference-times}
+\end{figure}
+
+VADER and the logistic regression model provide the fastest inference times below 0.1ms per sample. Both of the neural networks that we train from scratch are slower, but still deliver inference times of below 1ms, which is on-par with NTUSD-Fin. The SVM model is roughly 50 times slower than the fastest models at around 2.5ms per sample. Finally, all models that are based on LLMs are multiple orders of magnitude slower than the next quickest contender. At around 100ms per sample, they are more than 1000 times slower than the logistic regression. We have to acknowledge that all neural-network-based models would benefit from being run on a graphics processing unit (GPU). However, \shortciteA{buber2018performance} suggest that GPU utilization can speed up inference by a factor of 4 or 5, which would still leave the LLM-based models far behind all other ones in terms of speed.
+
+\begin{itemize}[noitemsep]
+	\item compare model performances on semEval?? financial phrase bank??
+	\item mention training times?
+\end{itemize}
+% =======================================================================
+\subsection{Model Diagnostics}
+\begin{itemize}[noitemsep]
+	\item show demos: engineer categories (e.g. simple stock, options, news headline, ...) 
+	\item own models: where do they fail?
+	\item SHAP values / most important words
+ 	\item show the learned word embeddings!
+\end{itemize}
 
 
 % =======================================================================
-\subsection{Model Diagnostics}
+\subsection{Analyzing Spam Posts(?)}
 
 % -----------------------------------------------------------------------
 % =======================================================================
