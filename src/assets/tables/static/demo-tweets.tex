@@ -1,0 +1,46 @@
+\begin{table}[!ht]
+\centering
+\footnotesize
+	\begin{tabular}{m{7.37cm}cccccc}
+	\toprule
+		\multirow{2}{*}{\textbf{Example Tweet}} & \multirow{2}{*}{$\bm{y}$} & \multicolumn{5}{c}{$\bm{\mathbb{P}(\hat y = y)}$} \\
+		 \cmidrule(l){3-7}
+		  &  & VADER & NTUSD & FinBERT & RoBERTa & pyFin \\
+	\toprule
+
+
+\emph{Stock Ownership} \\
+\cmidrule(l){1-7}
+adding to my \$AAPL position & POS & 0.00 & \emph{\textbf{0.52*}} & \emph{\textbf{0.66*}} & 0.21 & \emph{\textbf{0.91*}} \\
+I'm long \$AAPL & POS & 0.00 & \emph{\textbf{1.00*}} & 0.05 & 0.44 & \emph{\textbf{0.91*}} \\
+getting rid of my \$AAPL position & NEG & 0.00 & \emph{\textbf{0.56*}} & 0.05 & 0.16 & 0.36 \\
+Just shorted \$AAPL & NEG & 0.00 & \emph{\textbf{0.65*}} & 0.04 & 0.24 & \emph{\textbf{0.97*}} \\
+\cmidrule(l){1-1}
+\emph{Options Trading} \\
+\cmidrule(l){1-7}
+Going all in \$TSLA 4/20 \$69 calls today before close & POS & 0.00 & \emph{\textbf{0.83*}} & 0.10 & 0.08 & \emph{\textbf{0.83*}} \\
+Sold a 58P on \$INTC two weeks out & POS & 0.00 & \emph{\textbf{0.78*}} & 0.16 & 0.06 & 0.03 \\
+Going all in \$TSLA 4/20 \$69 puts today before close & NEG & 0.00 & 0.46 & 0.03 & 0.01 & \emph{\textbf{0.93*}} \\
+Sold a 58C on \$INTC two weeks out & NEG & 0.00 & 0.22 & 0.02 & 0.04 & 0.43 \\
+\cmidrule(l){1-1}
+\emph{Business Acumen} \\
+\cmidrule(l){1-7}
+\$TSLA factory can start production sooner than expected & POS & 0.00 & \emph{\textbf{0.75*}} & 0.11 & \emph{\textbf{0.81*}} & \emph{\textbf{0.75*}} \\
+\$F beats EPS estimate, expected 1.34 reported 1.89 & POS & 0.00 & \emph{\textbf{0.93*}} & 0.07 & \emph{\textbf{0.53*}} & \emph{\textbf{0.63*}} \\
+\$NFLX missed earnings estimates & NEG & 0.42 & 0.34 & \emph{\textbf{0.93*}} & \emph{\textbf{0.61*}} & 0.28 \\
+\$OXY to lay off 42\% of staff leaked memo reveals & NEG & 0.20 & 0.10 & \emph{\textbf{0.96*}} & \emph{\textbf{0.49*}} & 0.29 \\
+\cmidrule(l){1-1}
+\emph{Neutral} \\
+\cmidrule(l){1-7}
+\$OXY stocks trading at \$123 & NEU & \emph{\textbf{1.00*}} & 0.00 & \emph{\textbf{0.80*}} & \emph{\textbf{0.87*}} & \emph{\textbf{0.77*}} \\
+\$MMM Q3 numbers will decide the future of this stock & NEU & \emph{\textbf{1.00*}} & 0.00 & \emph{\textbf{0.93*}} & \emph{\textbf{0.86*}} & \emph{\textbf{0.54*}} \\
+Come join our chatroom for exclusive stock tips!! \$CASH & NEU & \emph{\textbf{0.62*}} & 0.00 & \emph{\textbf{0.92*}} & 0.39 & \emph{\textbf{0.87*}} \\
+Kathryn Janeway to take over as new \$SBUX CEO & NEU & \emph{\textbf{1.00*}} & 0.00 & \emph{\textbf{0.93*}} & \emph{\textbf{0.93*}} & 0.38 \\
+
+
+
+	\bottomrule
+	\end{tabular}
+	\caption{The models predictions on example tweets organized by common topics. Numbers are predicted probabilities for the \emph{correct class}. \emph{\textbf{x.xx*}} indicates that the model predicted the correct class.}
+	\label{table-example-tweets}
+\end{table}
