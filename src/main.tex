@@ -37,6 +37,12 @@
 \usepackage{bm} % bold match symbols
 \usepackage{longtable}
 \usepackage[english]{babel}
+\usepackage{fancyvrb}
+\usepackage{color}
+
+% Load style defs for pygment package (code highlighting)
+\input{assets/pygment_style_defs.tex}
+
 
 % HEADER & FOOTER
 \pagestyle{fancy}
@@ -66,6 +72,10 @@
 % Acronyms, TOC & Style Definitions
 \input{chapters/acronyms.tex}
 \newpage
+
+%\listoffigures
+%\listoftables
+
 \tableofcontents
 \newpage
 \input{assets/style_definitions.tex}  % custom tcolorbox styles

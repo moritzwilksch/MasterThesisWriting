@@ -76,10 +76,10 @@ VADER and the logistic regression model provide the fastest inference times belo
 \end{itemize}
 % =======================================================================
 \subsection{Model Diagnostics}
-Considering the trade-off between training and inference speed an predictive performance, the logistic regression model 
+Considering the trade-off between training and inference speed an predictive performance, the logistic regression model strikes the best balance between the two. Moreover, as a linear model, it is easily interpretable. This section will therefore focus on analyzing the proposed logistic regression model.
 
 \subsubsection{Topic-Specific Model Performance}
-To gain a more in-depth understanding of the strengths and weaknesses of every model, we examine their performance on an array of several example tweets organized into four categories. During data labeling, these categories naturally emerged from the data. The most common topics that tweets can be categorized in are ``stock ownership'', ``options trading'', ``business acumen'', and ``neutral''. Posts subsumed under the ``stock ownership'' topic discuss investing decisions that involve buying or selling stocks directly as opposed to using more complex financial instruments. The ``options trading'' group refers to tweets discussing options trades such as buying or selling puts or calls. These posts tend to contain more complex language because stock options are a more sophisticated financial instrument than stocks. The ``business acumen'' category subsumes tweets that carry implicit sentiment that can only be detected by using business knowledge. Such tweets might discuss business events or decisions that imply a market sentiment, like exceeding earnings expectations or laying off staff. Finally, the category ``neutral'' serves as a control group because a good sentiment model should be able to detect documents without any sentiment and classify them as such. Table \ref{table-example-tweets} contains example tweets for each of the four topics and displays the correct label $\bm{y}$ as well as each model's predicted probability for the correct class $\bm{\mathbb{P}(\hat y = y)}$ which is emphasized if it was high enough to predict the label correctly.
+To gain a more in-depth understanding of the strengths and weaknesses of the existing models and proposed logistic regression model, we examine their performance on an array of several example tweets organized into four categories. During data labeling, these categories naturally emerged from the data. The most common topics that tweets can be categorized in are ``stock ownership'', ``options trading'', ``business acumen'', and ``neutral''. Posts subsumed under the ``stock ownership'' topic discuss investing decisions that involve buying or selling stocks directly as opposed to using more complex financial instruments. The ``options trading'' group refers to tweets discussing options trades such as buying or selling puts or calls. These posts tend to contain more complex language because stock options are a more sophisticated financial instrument than stocks. The ``business acumen'' category subsumes tweets that carry implicit sentiment that can only be detected by using business knowledge. Such tweets might discuss business events or decisions that imply a market sentiment, like exceeding earnings expectations or laying off staff. Finally, the category ``neutral'' serves as a control group because a good sentiment model should be able to detect documents without any sentiment and classify them as such. Table \ref{table-example-tweets} contains example tweets for each of the four topics and displays the correct label $\bm{y}$ as well as each model's predicted probability for the correct class $\bm{\mathbb{P}(\hat y = y)}$ which is emphasized if it was high enough to predict the label correctly.
 
 
 \input{assets/tables/static/demo-tweets.tex}
@@ -115,7 +115,7 @@ Gaining more confidence in the proposed model's predictions requires an understa
 
 \input{assets/tables/static/confusion_matrix.tex}
 
-This is confirmed by the per-class precision, recall, and f1-score. These metrics are defined as follows, where $TP$ is the number of true positives, $FP$ is the number of false positives, and $FN$ is the number of false negatives.
+This is confirmed by the per-class precision, recall, and F1-score. These metrics are defined as follows, where $TP$ is the number of true positives, $FP$ is the number of false positives, and $FN$ is the number of false negatives.
 
 \begin{equation}
 	\textrm{precision} = \frac{TP}{TP + FP}
@@ -127,13 +127,21 @@ This is confirmed by the per-class precision, recall, and f1-score. These metric
 	\textrm{F} = 2 \cdot \frac{\textrm{precision} \cdot \textrm{recall}}{\textrm{precision} + \textrm{recall}}
 \end{equation}
 
-Table \ref{table-classification-report} presents these per-class metrics for the out-of-sample predictions. The model is equally precise for all classes which implies that the probability of any prediction being correct is around $0.64$ across classes.
-
+Table \ref{table-classification-report} presents these per-class metrics for the out-of-sample predictions. The model is equally precise for all classes which implies that the probability of any prediction being correct is around $0.64$ across classes. The F1-score, which can be interpreted as the harmonic mean between the precision and recall for a class, is almost similar for the positive and neutral class but significantly worse for the negative class due to its lower recall. 
 \input{assets/tables/static/classification_report.tex}
 
 
 \subsubsection{Effect of Dataset Size}
-learning curves 
+A classifier's performance is severely influenced by the quality and quantity of training data. Given fixed data quality, larger datasets help models generalize better. However, the marginal utility of additional data approaches zero if a dataset is sufficiently large \shortcite{weiss2006maximizing}. The optimal dataset size is task-specific and cannot be determined ex-ante. For the task of market sentiment analysis, we assess how different training set sizes affect the classifier's performance. Figure \ref{figure-learning-curve} shows the plot of a learning curve on our data. It is constructed by repeatedly training a classifier on smaller subsets of the data and recording its performance. We use a logistic regression model with the optimal hyperparameter configuration, fit it, and evaluate it on test sets using 5-fold cross validation. The curve displays the average AUC (markers) and the standard deviation across folds (shaded area).
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{assets/images/learning_curve.pdf}
+	\caption{Out-of-sample model performance if trained on smaller subsets of the dataset}
+	\label{figure-learning-curve}
+\end{figure}
+
+The first 1,000 data points allow the model to score an AUC of 0.727, which would already outperform all existing models. Between a training dataset size of 1,000 and 4,000, each additional 1,000 datapoints cause a sizable increase in model performance. After the size of 4,000, the marginal performance increase is smaller. Nonetheless, the slope of the curve at $n=8,000$ indicates that collecting additional data can still yield performance improvements as the learning curve has not yet plateaued. 
 
 % =======================================================================
 \subsection{Analyzing Spam Posts(?)}
@@ -141,4 +149,16 @@ learning curves
 % -----------------------------------------------------------------------
 % =======================================================================
 \subsection{pyFin-Sentiment}
-reference the python library.
+To facilitate the use of the model artifact for future work, we develop and publish an easy-to-use python library. The library is called \emph{pyFin-Sentiment} and available under an MIT license at \url{https://github.com/moritzwilksch/pyfin-sentiment}. It is also published to the python package index for installation using \texttt{pip}.
+
+
+
+%
+%
+%\begin{Verbatim}[commandchars=\\\{\}]
+%\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+%\end{Verbatim}
+
+
+
+
