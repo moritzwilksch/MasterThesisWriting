@@ -149,16 +149,28 @@ The first 1,000 data points allow the model to score an AUC of 0.727, which woul
 % -----------------------------------------------------------------------
 % =======================================================================
 \subsection{pyFin-Sentiment}
-To facilitate the use of the model artifact for future work, we develop and publish an easy-to-use python library. The library is called \emph{pyFin-Sentiment} and available under an MIT license at \url{https://github.com/moritzwilksch/pyfin-sentiment}. It is also published to the python package index for installation using \texttt{pip}.
+To facilitate the use of the model artifact in future work, we develop and publish an easy-to-use python library. The library is called \emph{pyFin-Sentiment} and available under an MIT license at \url{https://github.com/moritzwilksch/pyfin-sentiment}. It is also published to the python package index for installation using pip. It can be installed using the following command:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{pip} \PY{n}{install} \PY{n}{pyfin}\PY{o}{\PYZhy{}}\PY{n}{sentiment}
+\end{Verbatim}
+
+After installing the package, using the model for inference just requires a few lines of code. The \texttt{SentimentModel} class is imported and used to download the model. The download only needs to be executed once when using the library for the first time. Subsequent calls just use the locally cached version. For now, the ``\texttt{small}'' argument refers to the logistic regression model. It is the only available model, but designing the interface this way facilitates future expansion of the library with other model types. Next, the user can instantiate a model object and use the familiar \emph{scikit-learn} API that exposes the \texttt{.predict()} and \texttt{.predict\_proba()} methods:
 
 
 
-%
-%
-%\begin{Verbatim}[commandchars=\\\{\}]
-%\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
-%\end{Verbatim}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyfin\PYZus{}sentiment}\PY{n+nn}{.}\PY{n+nn}{model} \PY{k+kn}{import} \PY{n}{SentimentModel}
 
+\PY{c+c1}{\PYZsh{} the model only needs to be downloaded once}
+\PY{n}{SentimentModel}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{small}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{model} \PY{o}{=} \PY{n}{SentimentModel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{small}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Long \PYZdl{}TSLA!!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Selling my \PYZdl{}AAPL position}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} array([\PYZsq{}1\PYZsq{}, \PYZsq{}3\PYZsq{}], dtype=object)}
+\end{Verbatim}
+
+The predictions are strings $\in \{1, 2, 3\}$ where ``1'' represents positive, ``2'' represents neutral, and ``3'' represents negative sentiment.
 
 
 
