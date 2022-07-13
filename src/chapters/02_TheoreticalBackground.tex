@@ -71,8 +71,7 @@ Transformers are a neural network architecture for learning on sequences that wa
 
 \input{assets/tikz_figures/transformer.tex}
 
-
-\textcolor{red}{Add info about positional encoding here!}
+The architecture presented in Figure \ref{figure-transformer} does not have a notion of order among the words. In practice, researchers often add positional encodings to the word vectors. These positional encodings can be learned or generated using a periodic function such that words that are close together in a document have relatively similar positional encodings \cite{vaswani2017attention}. While injecting the positional information distorts the embedding space, the transformer model can now differentiate between words that are close together or far apart in the input sequence.
 
 
 % =======================================================================
@@ -125,7 +124,7 @@ Considering the ambiguous nature of sentiments and opinions, analyzing them enta
 
 
 % =======================================================================
-\subsection{Research Gap}
+\subsection{Research Problem}
 \label{section-research-gap}
 The literature on SA has devised plenty of theoretical contributions as well as functional model artifacts. However, almost none of these contributions apply to the domain of SA of financial social media posts. Many cover movie or product reviews, because labeled data is abundantly available in the form of star ratings that are attached to the textual review. Others comprise generic social media posts and address challenges like colloquial language and the use of emojis but are still not applicable to domain-specific texts \shortcite{mishev2020evaluation}. The few works that cover finance-related texts \cite{loughranMcD2011, araci2019finbert}  do not work on social media content because of its inherent challenges for automated SA. Table \ref{table-research-gap} provides an overview of the SA models that are predominantly used in the literature. The majority of them are dictionary-based unless otherwise noted ($\dagger$).
 

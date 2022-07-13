@@ -1,0 +1,16 @@
+\begin{table}[!ht]
+	\centering
+	\begin{tabular}{rcccc}
+	\toprule
+ & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Support}\\
+ \midrule
+\textbf{no sentiment} & 0.830 & 0.465 & 0.596 & 2,792\\
+\textbf{some sentiment} & 0.823 & 0.963 & 0.887 & 7,208\\
+\midrule
+\textbf{macro avg} & 0.826 & 0.714 & 0.742 & 10,000\\
+\textbf{weighted avg} & 0.825 & 0.824 & 0.806 & 10,000\\
+		\bottomrule
+	\end{tabular}
+	\caption{Classification report for differentiation between posts with and without sentiment}
+	\label{table-classification-report-two-class}
+\end{table}
