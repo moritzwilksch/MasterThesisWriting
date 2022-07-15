@@ -1,9 +1,49 @@
 \section{Discussion}
 
+This work set out to answer four research questions about the design of a functional market sentiment model (RQ1), its performance compared models from adjacent domains (RQ2), as well as the relationship between model size and performance (RQ3) and discrepancies between data sources (RQ4).
+
+The experimental results establish a series of findings that are relevant for designing a functional model artifact for market sentiment analysis (RQ1). First, the results indicate that while compiling the dataset used for model training or evaluation, data filtering is an essential step to uphold data quality. Even after running an API query that has been designed to exclude tweets that are unusable for the analysis, our conservative data filtering mechanisms remove more than a quarter of the data collected. Nevertheless, the dataset still contains spam posts that had to be labeled as neutral. This confirms previous findings which suggest that spam detection is among the top challenges for sentiment analysis of online content \shortcite{hussein2018survey}. Second, our results show that utilizing human annotations for domain-specific tasks can amortize quickly: The learning curves demonstrate that we achieve acceptable performance with relatively few data points. Using naturally occurring labels, on the other hand, is not possible for finance-related tweets because such labels do not exist. On platforms like StockTwits, where natural labels exist in the form of author-assigned sentiment tags, they have been shown to be sparse and unreliable \shortcite{chen2020finsome}. This contradicts findings by \shortciteA{renault2020sentiment} who shows that a classifier's performance can increase significantly if trained on dataset sizes up to 250,000 messages. However, their results are based on the two-class, author-assigned labels of StockTwits posts which need not be comparable to the labeled data in this work. Nonetheless, our results can confirm the suggestions regarding text preprocessing that \shortciteA{renault2020sentiment} makes. We also find emojis to be indicative of sentiment thus warranting their inclusion in the cleaned texts. Furthermore, the hyperparameter selection demonstrates that the use of n-grams significantly improves the ML models' predictive performance. Further text preprocessing like stemming or stop word removal did not increase predictive performance according to exploratory experiments. Finally, comparing the proposed models against each other suggests that for small datasets, using simple models is an advantageous strategy to combat overfitting. Despite strong regularization, the neural networks do not manage to outperform the logistic regression or SVM on our out-of-sample benchmarks.
+
+
+== Paragraph 2==\\
+\begin{itemize}[noitemsep]
+	\item performance on twitter
+	\item performance on stocktwits (do not detail the performance *decay* that's RQ4
+	\item inference times
+\end{itemize}
+
+
+== Paragraph 3==\\
+\begin{itemize}[noitemsep]
+	\item yes they can
+	\item ref: learned patterns, special vocabulary, glove embeddings are useless	
+	\item ref: overfitting, e.g. large token dropouts for NN
+\end{itemize}
+
+
+
+== Paragraph 4==\\
+RQ4
+
+== Paragraph 5==\\
+Limitations
+
+
+
+
+
+
+
+
+
+
+\newpage
+Discussion points
 \begin{itemize}[noitemsep]
 	\item interesting: finbert + twitter roberta are better than domain specific dictionary AND perform equally well but come from different adjacent domains
 	\item make paragraph structure follow methodology flowchart!
 	\item ref the performance decrease on finsome, it's related to the dataset differences and the model overfitting
+	\item re: dataset differences: espc. intereresting given that we filtered out loads of spam (i.e. neutral posts), so w/o filtering there would be many more neutrals, not more positive posts?
 	\item ref word embeddings: using generic ones (glove) is not a good idea
 	\item ref Renault findings re: dataset size
 	\item differentiating between uncertain and no sentiment is a hard task. performance does not warrant building a 4-class model, so just stick to three classes. It was also hardest to label!
