@@ -4,13 +4,7 @@ This work set out to answer four research questions about the design of a functi
 
 The experimental results establish a series of findings that are relevant for designing a functional model artifact for market sentiment analysis (RQ1). First, the results indicate that while compiling the dataset used for model training or evaluation, data filtering is an essential step to uphold data quality. Even after running an API query that has been designed to exclude tweets that are unusable for the analysis, our conservative data filtering mechanisms remove more than a quarter of the data collected. Nevertheless, the dataset still contains spam posts that had to be labeled as neutral. This confirms previous findings which suggest that spam detection is among the top challenges for sentiment analysis of online content \shortcite{hussein2018survey}. Second, our results show that utilizing human annotations for domain-specific tasks can amortize quickly: The learning curves demonstrate that we achieve acceptable performance with relatively few data points. Using naturally occurring labels, on the other hand, is not possible for finance-related tweets because such labels do not exist. On platforms like StockTwits, where natural labels exist in the form of author-assigned sentiment tags, they have been shown to be sparse and unreliable \shortcite{chen2020finsome}. This contradicts findings by \shortciteA{renault2020sentiment} who shows that a classifier's performance can increase significantly if trained on dataset sizes up to 250,000 messages. However, their results are based on the two-class, author-assigned labels of StockTwits posts which need not be comparable to the labeled data in this work. Nonetheless, our results can confirm the suggestions regarding text preprocessing that \shortciteA{renault2020sentiment} makes. We also find emojis to be indicative of sentiment thus warranting their inclusion in the cleaned texts. Furthermore, the hyperparameter selection demonstrates that the use of n-grams significantly improves the ML models' predictive performance. Further text preprocessing like stemming or stop word removal did not increase predictive performance according to exploratory experiments. Finally, comparing the proposed models against each other suggests that for small datasets, using simple models is an advantageous strategy to combat overfitting. Despite strong regularization, the neural networks do not manage to outperform the logistic regression or SVM on our out-of-sample benchmarks.
 
-
-== Paragraph 2==\\
-\begin{itemize}[noitemsep]
-	\item performance on twitter
-	\item performance on stocktwits (do not detail the performance *decay* that's RQ4
-	\item inference times
-\end{itemize}
+The evaluation of all models on the collected dataset of tweets (RQ2) show that all proposed models outperform the existing ones. The dictionary-based models perform notably worse than other existing models. In generic sentiment analysis, VADER performs best of its class achieving accuracies of up to 72\% \shortcite{al2020evaluating}. Our results show that it hardly outperforms a random guessing strategy when applied to the market sentiment analysis task. Even NTUSD-Fin only performs slightly better, despite being developed on finance-related social media posts. This behavior suggests that the rigid structure of dictionary-based models diminishes their performance. The performance of both TwitterRoBERTa and FinBERT deliver further evidence for this claim. TwitterRoBERTa was trained on generic Twitter messages while FinBERT was trained on a set of news headlines. Nevertheless, they perform significantly better than their dictionary-based counterparts as the sub-word tokenization they employ allows them to process out-of-vocabulary tokens. Surprisingly, TwitterRoBERTa performs on par with FinBERT, although its training corpus is not related to finance or business. However, even these two LLM-based neural networks are inferior to all of our proposed models. This holds true on the dataset of tweets as well as the Fin-SoMe dataset consisting of StockTwits messages.
 
 
 == Paragraph 3==\\
@@ -18,12 +12,17 @@ The experimental results establish a series of findings that are relevant for de
 	\item yes they can
 	\item ref: learned patterns, special vocabulary, glove embeddings are useless	
 	\item ref: overfitting, e.g. large token dropouts for NN
+ 	\item inference times
+	\item The large performance gap between these complex, pre-trained models and a logistic regression classifier can be explained by the domain-specific vocabulary the custom models have learned. Many tokens that clearly indicate a \emph{market} sentiment do not carry any sentiment in general English language making it hard for generic pre-trained models to correctly classify documents using them. Furthermore, our results provide guidance for researchers training custom domain-specific models. We show that using pre-trained word embeddings -- a common practice in NLP -- can be detrimental to classifier performance. While they are essential for achieving state of the art performance on tasks like neural machine translation \shortcite{qi2018and}, they should not be used for sentiment analysis out of the box. This issue has previously been identified by research which suggests adapting the vectors to domain-specific tasks like sentiment analysis \shortcite{rezaeinia2017improving} or use in medical coding \shortcite{patel2017adapting}.
+
 \end{itemize}
 
 
 
 == Paragraph 4==\\
 RQ4
+On a dataset of StockTwits posts, the proposed models' performance is reduced. Nonetheless, they still outperform the existing models indicating that the patterns learned from tweets generalize to messages from other platforms to a certain extent.
+
 
 == Paragraph 5==\\
 Limitations
@@ -48,4 +47,6 @@ Discussion points
 	\item ref Renault findings re: dataset size
 	\item differentiating between uncertain and no sentiment is a hard task. performance does not warrant building a 4-class model, so just stick to three classes. It was also hardest to label!
 	\item ``Recommend SA model for different use cases'' (see DSR flowchart)
+	\item Future research: aspect-based SA to remedy the uncertain category
+	\item 
 \end{itemize}
