@@ -3,16 +3,16 @@
 % =======================================================================
 \subsection{Dataset Statistics}
 \label{section-dataset-diffs}
-Before benchmarking any models on the collected dataset and Fin-SoMe, we assess how similar the datasets are using descriptive statistics. Figure \ref{figure-word-counts} shows the distribution of post lengths measured as the number of words per post. It indicates that tweets tend to be shorter than StockTwits messages on average. However, the distribution of their lengths is right-skewed suggesting that Twitter is occasionally used to share longer posts while StockTwits is not.
+Before benchmarking any models on the collected dataset, Fin-SoMe, and SemEval-2017 Task 5 (``SemEval'') \cite{cortis2017semeval} we assess how similar the datasets are using descriptive statistics. Figure \ref{figure-word-counts} shows the distribution of post lengths measured as the number of words per post. It indicates that tweets tend to be shorter than StockTwits messages on average. However, the distribution of their lengths is right-skewed suggesting that Twitter is occasionally used to share longer posts while StockTwits is not. SemEval contains 38\% tweets and 62\% StockTwits posts and therefor exhibits a symmetric distribution of post length with a lower mean than Fin-SoMe.
 
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{assets/images/word_count_distribution.pdf}
-	\caption{Number of words per post for tweets (pyFin) and StockTwits posts (Fin-SoMe)}
+	\caption{Number of words per post for tweets (pyFin), StockTwits posts (Fin-SoMe), and the SemEval dataset}
 	\label{figure-word-counts}
 \end{figure}
 
-The post length is not the only differentiating characteristic: The distribution of class labels also significantly differs between the two datasets. Within Fin-SoMe, more than 70\% of posts are bullish while only 10\% are bearish. While the data from Twitter also contains more positive than negative tweets, the class ratio is more balanced. However, this does not necessarily imply that posts on StockTwits are generally more positive. The Fin-SoMe dataset either uses slightly different label definitions or contains labeling errors. For example, the post \emph{``\$NXT.X December 28th is the key date. Dec 25-28 this is gonna be wild!''} was labeled as ``bullish''. However, no part of the sentence indicates a clear bullish sentiment. The post author could also expect a stock price drop. Given the ambiguous nature of the text, it would be labeled ``Uncertain'' according to the codebook used in this work.
+The post length is not the only differentiating characteristic: The distribution of class labels also significantly differs between the datasets (Figure \ref{figure-class-distribution}). Within Fin-SoMe, more than 70\% of posts are bullish while only 10\% are bearish. While the data from Twitter also contains more positive than negative tweets, the class ratio is more balanced. However, this does not necessarily imply that posts on StockTwits are generally more positive. The Fin-SoMe dataset either uses slightly different label definitions or contains labeling errors. For example, the post \emph{``\$NXT.X December 28th is the key date. Dec 25-28 this is gonna be wild!''} was labeled as ``bullish''. However, no part of the sentence indicates a clear bullish sentiment. The post author could also expect a stock price drop. Given the ambiguous nature of the text, it would be labeled ``Uncertain'' according to the codebook used in this work. SemEval exhibits yet another class distribution where very few documents belong to the neutral class but the positive posts still outnumber the negative ones. However, as the dataset contains posts from two sources and the sampling methodology used for compiling the dataset is not available in sufficient detail, it is not representative for either one of the platforms.
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{assets/images/class_distributions.pdf}
@@ -20,16 +20,18 @@ The post length is not the only differentiating characteristic: The distribution
 	\label{figure-class-distribution}
 \end{figure}
 
-Finally, the vocabulary used in the posts on the two platforms is not identical. The relative frequency of words like ``Elon'', ``chatroom'', ``inflation'', and ``factory'' is between 20 and 50 times higher in the Twitter dataset than it is in the posts from StockTwits. On the other hand, the words ``blackberry'', ``silver'', ``vix'', and ``senate'' are 12 to 25 times more prevalent in StockTwits posts than in tweets. The divergence between the two sets of vocabulary can be explained by platform-specific and temporal differences. Users on Twitter are more prone to interacting with one another, for example by commenting. Additionally, the Fin-SoMe dataset was collected in or before 2020 putting more than two years of time between the posts in both data sets. Therefore, the two datasets have different data distributions despite covering similar domains. These differences can affect a model's predictive performance, which will be assessed in more detail in Section \ref{section-modelperf-on-finsome}. The same concept applies to any model's ability to generalize to future, unseen data. If the nature of online discussions changes significantly, older models might require re-training on current data to maintain their performance characteristics.
+Finally, the vocabulary used in the posts on Twitter and StockTwits is not identical. The relative frequency of words like ``Elon'', ``chatroom'', ``inflation'', and ``factory'' is between 20 and 50 times higher in the Twitter dataset than it is in the posts from StockTwits. On the other hand, the words ``blackberry'', ``silver'', ``vix'', and ``senate'' are 12 to 25 times more prevalent in StockTwits posts than in tweets. The divergence between the two sets of vocabulary can be explained by platform-specific and temporal differences. Users on Twitter are more prone to interacting with one another, for example by commenting. Additionally, the Fin-SoMe dataset was collected in or before 2020 putting more than two years of time between the posts in both data sets. Therefore, the two datasets have different data distributions despite covering similar domains. These differences can affect a model's predictive performance, which will be assessed in more detail in Section \ref{section-modelperf-on-finsome}. The same concept applies to any model's ability to generalize to future, unseen data. If the nature of online discussions changes significantly, older models might require re-training on current data to maintain their performance characteristics.
 
 % =======================================================================
 \subsection{Model Performance Evaluation}
 
 \subsubsection{Optimal Model Configuration}
 All subsequently reported results will be based on the optimal model configuration that is found during hyperparameter optimization.
-The optimal hyperparameter configuration for each model is presented in Table \ref{table-optimal-hparams}. The chosen hyperparameters suggest that for the ML models subword tokenization outperforms words-based tokenization using character n-grams of size 4. Another notable pattern is the DL models' need for high token dropouts. Both the recurrent neural net and the transformer-based neural net generalize best when 40 - 50\% of the input tokens are dropped. Additionally, the optimal embedding dimensionality is relatively low. A possible cause for this is that complex DL models require stronger regularization to not overfit smaller datasets.
+The optimal hyperparameter configuration for each model is presented in Table \ref{table-optimal-hparams}. 
 
 \input{assets/tables/static/best_hparams.tex}
+
+The chosen hyperparameters suggest that for the ML models subword tokenization outperforms words-based tokenization using character n-grams of size 4. Another notable pattern is the DL models' need for high token dropouts. Both the recurrent neural net and the transformer-based neural net generalize best when 40 - 50\% of the input tokens are dropped. Additionally, the optimal embedding dimensionality is relatively low. A possible cause for this is that complex DL models require stronger regularization to not overfit smaller datasets.
 
 
 
@@ -47,13 +49,17 @@ In comparison, all of the proposed models obtain AUC scores above 0.80. Out of t
 
 
 
-\subsubsection{Performance on StockTwits Posts}
+\subsubsection{Performance on External Out-of-Sample Data}
 \label{section-modelperf-on-finsome}
-To answer RQ4, we apply all models to the StockTwits posts compiled in the Fin-SoMe dataset. The corresponding model performances are displayed in Figure \ref{figure-model-performance-stocktwits}. The existing models' performance hardly changes compared to the ROC AUC on the tweet dataset. VADER now scores a slightly higher AUC of 0.590 while NTUSD-Fin achieves a score of 0.599. TwitterRoBERTa and FinBERT achieve AUC values of 0.705 and 0.710 respectively. On the other hand, all of the proposed models perform significantly worse on Fin-SoMe. The fine-tuned BERT model only scores an AUC of 0.702 while the transformer-based and recurrent neural networks reach AUC scores of 0.707 and 0.709 respectively. The two ML models still perform best by obtaining an AUC of 0.727. Despite the relative performance decrease when applied to data from a different source, the proposed ML models still manage to outperform the existing BERT-based models. The performance decrease is likely due to the differences between the datasets as detailed in Section \ref{section-dataset-diffs}. The existing models are not affected by it because both datasets constitute out-of-distribution data for them.
+To asses each model's generalization ability and to answer RQ4, we apply all models to the StockTwits posts compiled in the Fin-SoMe dataset as well as the SemEval dataset, which contains posts from both platforms. The corresponding model performances are displayed in Figure \ref{figure-model-performance-stocktwits}. The existing models' performance hardly changes compared to the ROC AUC on the tweet dataset.\newline
+On Fin-SoMe, VADER now scores a slightly higher AUC of 0.590 while NTUSD-Fin achieves a score of 0.599. TwitterRoBERTa and FinBERT achieve AUC values of 0.705 and 0.710 respectively.\newline
+On SemEval, VADER performs worst at an AUC of 0.564 while NTUSD-Fin's performance is better compared to the Fin-SoMe data at an AUC of 0.626. Similar to VADER, FinBERT's performance also degraded significantly as the model only scores an AUC of 0.658. While TwitterRoBERTa seems to outperform the other models, this is a \emph{spurious signal}. The SemEval dataset was included as part of the training data by \shortciteA{barbieri2020tweeteval}, who designed TwitterRoBERTa. Therefore, the performance of TwitterRoBERTa on SemEval is not a true out-of-sample estimate and cannot be compared to the other metrics.
+
+Compared to the existing models, all of the proposed models perform significantly worse on Fin-SoMe as well as SemEval. The fine-tuned BERT model only scores an AUC of 0.702 and 0.625 on Fin-SoMe and SemEval, respectively. The transformer-based and recurrent neural networks reach AUC scores of 0.707 and 0.709 on Fin-SoMe, whereas the transformer outperforms the recurrent network on SemEval with an AUC of 0.690 over 0.661. The two ML models still perform best by obtaining an AUC of 0.727 on Fin-SoMe and 0.724 (logistic regression) and 0.737 (SVM) on SemEval. Despite the relative performance decrease when applied to data from a different source, the proposed ML models still manage to outperform the existing BERT-based models. The performance decrease is likely due to the differences between the datasets as detailed in Section \ref{section-dataset-diffs}. The existing models are not affected by it because both datasets constitute out-of-distribution data for them.
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{assets/images/model_performance_finsome.pdf}	
-	\caption{Out-of-sample model performance on Fin-SoMe}
+	\caption{Model performance on Fin-SoMe and SemEval}
 	\label{figure-model-performance-stocktwits}
 \end{figure}
 
