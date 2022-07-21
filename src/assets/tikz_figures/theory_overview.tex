@@ -6,7 +6,7 @@
 	
 	\node[lvl1](1){\textbf{Automated Sentiment Analysis}};
 	\node[lvl1,minimum size=2em, below right=0.1cm and 2cm of 1](2){\textbf{Datasets}};
-	\node[lvl1,minimum size=2em, below left=0.1cm and 2cm of 1](3){\textbf{Sentiment Analysis}};
+	\node[lvl1,minimum size=2em, below left=0.1cm and 2cm of 1](3){\textbf{Sentiment}};
 	
 	
 	%---
@@ -31,7 +31,7 @@
 		
 
 \draw[->](1) -| (2) node[midway,above,xshift=-2cm,minimum size=1.5em]{\emph{requires}};
-\draw[->](1) -| (3) node[midway,above,xshift=2cm, minimum size=1.5em]{\emph{automates}};
+\draw[->](1) -| (3) node[midway,above,xshift=2cm, minimum size=1.5em]{\emph{analyzes}};
 \draw[->](2.south) -- (domain) node[midway, right]{\emph{sampled from}};
 \draw[->](3.south) -- (op) node[midway, right]{\emph{measured on}};
 \draw[->](1.south) -- (models) node[midway, right]{\emph{uses}};
