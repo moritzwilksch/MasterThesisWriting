@@ -1,12 +1,13 @@
 \begin{figure}[!ht]
 \centering
+\small
 \begin{tikzpicture}
-	\tikzstyle{lvl1}=[draw, text width=3.3cm, align=center, minimum size=3em]
-	\tikzstyle{lvl2}=[text width=3.2cm, minimum size=1.6em]
+	\tikzstyle{lvl1}=[draw, text width=3.7cm, align=center, minimum size=3em]
+	\tikzstyle{lvl2}=[text width=3.7cm, minimum size=1.6em]
 	
-	\node[lvl1](1){\textbf{Automated Sentiment Analysis}};
-	\node[lvl1,minimum size=2em, below right=0.1cm and 2cm of 1](2){\textbf{Datasets}};
-	\node[lvl1,minimum size=2em, below left=0.1cm and 2cm of 1](3){\textbf{Sentiment}};
+	\node[lvl1](1){\textbf{Automated Sentiment Analysis (Ch. \ref{section-automated-sa})}};
+	\node[lvl1,minimum size=2em, below right=0.1cm and 2cm of 1](2){\textbf{Datasets (Ch. \ref{section-datasets})}};
+	\node[lvl1,minimum size=2em, below left=0.1cm and 2cm of 1](3){\textbf{Sentiment (Ch. \ref{section-sa})}};
 	
 	
 	%---
@@ -14,31 +15,31 @@
 
 	
 	% Domain
-	\node[draw, lvl2,align=center, below=1.5cm of 2,outer sep=0](domain){\textbf{Domain}};
+	\node[draw, lvl2,align=center, below=1.5cm of 2,outer sep=0](domain){\textbf{Domain (Ch. \ref{section-sa-challenges})}};
 	\node[draw, dashed, lvl2, below=0cm of domain,outer sep=0](){Generic\\Domain-Specific};
 
 	% Scales
-	\node[draw, lvl2,align=center, below=1.5cm of 3,outer sep=0](op){\textbf{Scales}};
-	\node[draw, dashed, lvl2, below=0cm of op,outer sep=0,minimum size=4.5em](op_list){Discrete\\Continuous\\Multi-Dimensional};
+	\node[draw, dashed, lvl2, below=0cm of 3,outer sep=0,minimum size=4.5em,text width=3.7cm](op_list){Discrete\\Continuous\\Multi-Dimensional};
 	
 	% Models
-	\node[draw, lvl2,align=center,outer sep=0](models) at (op -| 1) {\textbf{Models}};
+	\node[draw, lvl2,align=center,outer sep=0](models) at (op_list -| 1) {\textbf{Models\\(Ch. \ref{section-dict-based} \& \ref{section-ml-based-sa})}};
 	\node[draw, dashed, lvl2, below=0cm of models,outer sep=0,minimum size=4.5em](models_list){Dictionaries\\Machine Learning\\Deep Learning};
 	
 	% Text Representation
-	\node[draw, lvl2,align=center,outer sep=0,below=3cm of models,text width=3.5cm](repr) {\textbf{Text Representation}};
+	\node[draw, lvl2,align=center,outer sep=0,below=2.5cm of models,text width=3.5cm](repr) {\textbf{Text Representation (Ch. \ref{section-text-repr-theory})}};
 	\node[draw, dashed, lvl2, below=0cm of repr,outer sep=0,text width=3.5cm](){Bag-of-Words\\Word Embeddings};
 		
 
 \draw[->](1) -| (2) node[midway,above,xshift=-2cm,minimum size=1.5em]{\emph{requires}};
 \draw[->](1) -| (3) node[midway,above,xshift=2cm, minimum size=1.5em]{\emph{analyzes}};
 \draw[->](2.south) -- (domain) node[midway, right]{\emph{sampled from}};
-\draw[->](3.south) -- (op) node[midway, right]{\emph{measured on}};
 \draw[->](1.south) -- (models) node[midway, right]{\emph{uses}};
 \coordinate(c1) at (repr.east) ++ (1cm, 0cm);
 \draw[->](2.west) -| ($(repr.east)+(1.25cm,0)$)  node[midway,sloped,rotate=180,above left,xshift=-1cm]{\emph{transformed to}} -- (repr.east);
 \draw[->](repr.north) -- (models_list.south) node[midway, right]{\emph{fed to}};
-\draw[->](models_list.west) -- (op_list.east) node[midway, above]{\emph{predict}};
+\draw[->](models_list.west) -| (op_list.south) node[midway, below,xshift=2cm]{\emph{predict}};
 		
 \end{tikzpicture}
+\caption{Overview of relevant theoretical concepts and their relationships}
+\label{figure-theory-overview}
 \end{figure}
