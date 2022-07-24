@@ -25,7 +25,7 @@ Finally, the vocabulary used in the posts on Twitter and StockTwits is not ident
 % =======================================================================
 \subsection{Model Performance Evaluation}
 
-\subsubsection{Optimal Model Configuration}
+\subsubsection{Optimal Model Configurations}
 All subsequently reported results will be based on the optimal model configuration that is found during hyperparameter optimization.
 The optimal hyperparameter configuration for each model is presented in Table \ref{table-optimal-hparams}. 
 
@@ -146,7 +146,7 @@ A classifier's performance is severely influenced by the quality and quantity of
 The first 1,000 data points allow the model to score an AUC of 0.727, which would already outperform all existing models. Between a training dataset size of 1,000 and 4,000, each additional 1,000 datapoints cause a sizable increase in model performance. After the size of 4,000, the marginal performance increase is smaller. Nonetheless, the slope of the curve at $n=8,000$ indicates that collecting additional data can still yield performance improvements as the learning curve has not yet plateaued. 
 
 % =======================================================================
-\subsection{Analyzing Neutral Posts}
+\subsection{Handling Neutral, Uncertain, and Spam Posts}
 \label{section-post-hoc-classes}
 The class labeled as ``neutral'' subsumes multiple kinds of posts. According to the codebook (Table \ref{table-codebook}) and the subsequent merge of the ``no sentiment'' and ``uncertain'' labels, it is assigned to spam posts, posts without any sentiment, and posts with divergent or uncertain sentiment. This section analyzes how the neutral class can be differentiated from other sentiment classes and whether a four-class modeling approach accounting for uncertain posts is superior to the common three-class approach.\newline
 The simplest option to handle neutral as well as uncertain posts is building a model with four possible output classes instead of three. For this purpose, we re-fit the proposed logistic regression model using the optimal hyperparameters, but this time keep all four classes instead of merging the ``no sentiment'' and ``uncertain'' class. Table \ref{table-classification-report-four-class} shows the per-class performance of the model. Besides a slight increase in recall for the positive and negative class, the metrics are mostly similar to the three-class model with the ``no sentiment'' class resembling the previous ``neutral'' class. However, the model has a hard time classifying posts belonging to the newly added ``uncertain'' class. The precision and recall for this class indicate that the model misses most uncertain posts and if it predicts the ``uncertain'' label, the prediction is most likely incorrect.
