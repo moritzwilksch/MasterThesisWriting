@@ -15,8 +15,8 @@
 	\matrix[matrix of nodes,right=2em of mtx,nodes={minimum width=1em,anchor=south},row sep=0.5em,row 1/.style={nodes={text height=0.5em,align=left,rotate=90,anchor=east,text width=5em}},column sep=-0.12em](mtx2) {\textbf{academ} & \textbf{in} & \textbf{resear} & \textbf{academi} & \textbf{ademia} & \textbf{ademic} & \textbf{archer} & \textbf{cademia} & \textbf{cademic} & \textbf{earcher} & \textbf{esearch} & \textbf{researc} & \textbf{search} & \textbf{searche} \\1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1\\ 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 0\\};
 	
 		% txt
-	\node[text width=12em,align=center,left=3em of mtx-2-1](txt1){\emph{``researcher in academia''}};
-	\node[left=3em of mtx-3-1,text width=9em,align=center](txt2) {\emph{``academic research''}};
+	\node[text width=12em,align=right,left=3em of mtx-2-1](txt1){\emph{``researcher in academia''}};
+	\node[left=3em of mtx-3-1,text width=9em,align=right](txt2) {\emph{``academic research''}};
 
 \draw[->, shorten >= 0.5em](txt1) -- (mtx-2-1);
 \draw[->, shorten >= 0.5em](txt2) -- (mtx-3-1);
