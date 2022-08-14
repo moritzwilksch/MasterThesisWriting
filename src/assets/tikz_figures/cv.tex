@@ -15,12 +15,9 @@
 	\node[left=2em of mtx-3-1,anchor=east]{Split 3};
 	\node[left=2em of mtx-4-1,anchor=east]{Split 4};
 	\node[left=2em of mtx-5-1,anchor=east]{Split 5};		
-	
-	
-	
-	\draw [decorate, decoration = {calligraphic brace,raise=5pt,amplitude=8pt},line width=1.5pt] (mtx-1-2.north west) --  (mtx-1-5.north east) node[pos=0.5,above=15pt]{used for inner cross-validation};
+
 	
 	\end{tikzpicture}
-	\caption{Nested cross-validation split of a dataset}
+	\caption{Nested cross-validation split of a dataset. Grey shade represents data used for testing, white represents data used for training and validation.}
 	\label{figure-cv-split}
 \end{figure}
