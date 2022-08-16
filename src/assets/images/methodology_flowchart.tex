@@ -54,15 +54,15 @@
 % ###################################################################
 
 % Nodes
-\node[mynode,below=3cm of crypto,anchor=east,xshift=-1cm](ml1){Nested cross-validation split $5 \times 5$ fold};
-\node[mynode, below=1em of ml1](ml2){Represent data as TF-IDF bag of words matrix};
-\node[mynode, below=1em of ml2](ml3){Training, hyperparameter optimization, out-of-sample performance assessment};
+\node[mynode,below=3cm of crypto,anchor=east,xshift=-1cm](ml1){nested cross-validation split $5 \times 5$ fold};
+\node[mynode, below=1em of ml1](ml2){represent data as TF-IDF bag of words matrix};
+\node[mynode, below=1em of ml2](ml3){training, hyperparameter optimization, out-of-sample performance assessment};
 
 
 
-\node[mynode,below=3cm of crypto,anchor=west,xshift=1cm](dl1){Hold out $25\%$ test data, use rest for 5-fold cross-validation};
-\node[mynode, below=1em of dl1](dl2){Create sub-word tokenizers, represent text as list of tokens};
-\node[mynode, below=1em of dl2](dl3){Training, hyperparameter optimization, out-of-sample performance assessment};
+\node[mynode,below=3cm of crypto,anchor=west,xshift=1cm](dl1){hold out $25\%$ test data, use rest for 5-fold cross-validation};
+\node[mynode, below=1em of dl1](dl2){create sub-word tokenizers, represent text as list of tokens};
+\node[mynode, below=1em of dl2](dl3){training, hyperparameter optimization, out-of-sample performance assessment};
 
 % Arrows
 \coordinate(coord1) at ($(ml1)!0.5!(dl1)$);
