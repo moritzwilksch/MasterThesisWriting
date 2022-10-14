@@ -41,6 +41,7 @@
 \usepackage[english]{babel}
 \usepackage{fancyvrb}
 \usepackage{color}
+\usepackage{titletoc}
 
 % Load style defs for pygment package (code highlighting)
 \input{assets/pygment_style_defs.tex}
@@ -74,16 +75,24 @@
 \begin{document}
 \pagenumbering{Roman}
 
+% Titlepage
 \input{chapters/titlepage.tex}
-% Acronyms, TOC & Style Definitions
+
+% Abstract, zusammenfassung, TOC, LoF, LoT, Acronyms
+\newpage
+\input{chapters/abstract.tex}
+\newpage
+\input{chapters/zusammenfassung.tex}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
 \input{chapters/acronyms.tex}
 \newpage
 
-%\listoffigures
-%\listoftables
-
-\tableofcontents
-\newpage
 \input{assets/style_definitions.tex}  % custom tcolorbox styles
 
 % -------------- START CONTENT --------------
